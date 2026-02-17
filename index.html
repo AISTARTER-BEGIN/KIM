@@ -7,25 +7,25 @@
     <title>DongUk KIM | AI/ML Engineer Portfolio</title>
     <style>
         /* ============================================
-           CSS 변수 정의 (밝은 테마 색상 시스템)
+           CSS 변수 정의
         ============================================ */
         :root {
             /* 주요 색상 팔레트 */
-            --bg-primary: #F2FFDD;          /* 연한 라임 크림 (메인 배경) */
-            --bg-secondary: #D1F4FF;        /* 연한 하늘색 (보조 배경) */
-            --bg-card: rgba(209, 244, 255, 0.4);  /* 카드 배경 */
+            --bg-primary: #F2FFDD;
+            --bg-secondary: #D1F4FF;
+            --bg-card: rgba(209, 244, 255, 0.4);
             --bg-card-hover: rgba(209, 244, 255, 0.7);
             
-            /* 액센트 색상 (보색 조화) */
-            --accent-primary: #4A90E2;      /* 진한 스카이 블루 */
-            --accent-secondary: #7B68EE;    /* 미디엄 슬레이트 블루 */
-            --accent-warm: #FF6B9D;         /* 코랄 핑크 (따뜻한 강조) */
-            --accent-success: #2EA043;      /* 그린 (완료 상태) */
+            /* 액센트 색상 */
+            --accent-primary: #4A90E2;
+            --accent-secondary: #7B68EE;
+            --accent-warm: #FF6B9D;
+            --accent-success: #2EA043;
             
             /* 텍스트 색상 */
-            --text-primary: #1a1a1a;        /* 거의 검정 (주 텍스트) */
-            --text-secondary: #4a5568;      /* 다크 그레이 (보조 텍스트) */
-            --text-muted: #718096;          /* 회색 (약한 텍스트) */
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
             
             /* 보더 색상 */
             --border-light: rgba(74, 144, 226, 0.15);
@@ -72,14 +72,13 @@
             line-height: var(--line-height-base);
             overflow-x: hidden;
             
-            /* 미묘한 그라데이션 패턴 추가 */
             background-image: 
                 radial-gradient(circle at 15% 25%, rgba(74, 144, 226, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 85% 75%, rgba(255, 107, 157, 0.06) 0%, transparent 50%);
         }
 
         /* ============================================
-           배경 애니메이션 요소 (밝은 테마용)
+           배경 애니메이션 요소
         ============================================ */
         .blob {
             position: fixed;
@@ -100,7 +99,6 @@
             100% { transform: translate(25%, 25%) scale(0.95); }
         }
 
-        /* 기어 배경 SVG */
         .gear-background {
             position: fixed;
             top: 50%;
@@ -131,7 +129,6 @@
             position: relative;
         }
 
-        /* 스크롤 애니메이션 */
         .fade-in-section {
             opacity: 0;
             transform: translateY(40px);
@@ -145,7 +142,7 @@
         }
 
         /* ============================================
-           히어로 섹션 (폰트 크기 축소)
+           히어로 섹션
         ============================================ */
         .hero-section {
             min-height: 100vh;
@@ -158,7 +155,7 @@
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-size: clamp(2rem, 7vw, 5rem);
             font-weight: 900;
             line-height: 0.95;
             letter-spacing: -0.04em;
@@ -202,7 +199,7 @@
         }
 
         .hero-subtitle {
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-size: clamp(0.9rem, 1.8vw, 1.05rem);
             color: var(--text-secondary);
             font-weight: 400;
             max-width: 650px;
@@ -244,7 +241,7 @@
         }
 
         .marquee-item {
-            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
             font-weight: 900;
             color: var(--text-primary);
             text-transform: uppercase;
@@ -274,7 +271,7 @@
         }
 
         /* ============================================
-           숫자 강조 섹션 (폰트 크기 축소)
+           숫자 강조 섹션 (오버플로우 수정)
         ============================================ */
         .stats-hero {
             min-height: 100vh;
@@ -286,7 +283,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: var(--space-md);
             max-width: 1100px;
             width: 100%;
@@ -294,12 +291,18 @@
 
         .stat-item {
             text-align: center;
-            padding: var(--space-lg);
+            padding: var(--space-lg) var(--space-md);
             background: var(--bg-card);
             backdrop-filter: blur(10px);
             border: 2px solid var(--border-light);
             border-radius: 20px;
             transition: all var(--transition-base);
+            /* 오버플로우 방지 */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .stat-item:hover {
@@ -310,7 +313,8 @@
         }
 
         .stat-number {
-            font-size: clamp(3rem, 8vw, 5rem);
+            /* 폰트 크기를 더 축소하여 카드 내부에 완전히 수용 */
+            font-size: clamp(2.5rem, 6vw, 3.8rem);
             font-weight: 900;
             line-height: 1;
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
@@ -319,25 +323,34 @@
             background-clip: text;
             display: block;
             margin-bottom: var(--space-sm);
+            /* 텍스트가 넘치지 않도록 처리 */
+            max-width: 100%;
+            word-break: keep-all;
+            overflow-wrap: normal;
         }
 
         .stat-label {
-            font-size: clamp(0.85rem, 1.8vw, 1rem);
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
             color: var(--text-primary);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-weight: 700;
             margin-bottom: var(--space-xs);
+            /* 레이블도 오버플로우 방지 */
+            max-width: 100%;
+            word-break: break-word;
         }
 
         .stat-description {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             line-height: 1.5;
+            max-width: 100%;
+            word-break: keep-all;
         }
 
         /* ============================================
-           글래스 카드 (밝은 테마용)
+           글래스 카드
         ============================================ */
         .glass-card {
             background: var(--bg-card);
@@ -357,10 +370,10 @@
         }
 
         /* ============================================
-           타이포그래피 (폰트 크기 축소)
+           타이포그래피
         ============================================ */
         h2 {
-            font-size: clamp(1.6rem, 4vw, 2.5rem);
+            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
             font-weight: 900;
             margin-bottom: var(--space-lg);
             letter-spacing: -0.02em;
@@ -370,7 +383,7 @@
         }
 
         h3 {
-            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: var(--space-sm);
@@ -379,7 +392,7 @@
 
         p {
             color: var(--text-secondary);
-            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            font-size: clamp(0.9rem, 1.6vw, 1rem);
             line-height: 1.7;
             margin-bottom: var(--space-sm);
         }
@@ -437,7 +450,7 @@
         }
 
         .project-title {
-            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
             font-weight: 900;
             color: var(--text-primary);
             line-height: 1.25;
@@ -542,7 +555,7 @@
         }
 
         /* ============================================
-           시스템 아키텍처 코드 블록
+           코드 블록
         ============================================ */
         .code-block {
             background: linear-gradient(135deg, 
@@ -585,7 +598,7 @@
         ============================================ */
         @media (max-width: 768px) {
             .hero-title {
-                font-size: clamp(2rem, 9vw, 4rem);
+                font-size: clamp(1.8rem, 8vw, 3.5rem);
             }
 
             .stats-grid {
@@ -593,8 +606,12 @@
                 gap: var(--space-sm);
             }
 
+            .stat-number {
+                font-size: clamp(2.2rem, 7vw, 3rem);
+            }
+
             .marquee-item {
-                font-size: clamp(1rem, 5vw, 1.5rem);
+                font-size: clamp(0.9rem, 4vw, 1.3rem);
             }
 
             .gear-background {
@@ -609,6 +626,16 @@
 
             .glass-card {
                 padding: var(--space-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stat-number {
+                font-size: clamp(2rem, 8vw, 2.5rem);
+            }
+
+            .stat-item {
+                padding: var(--space-md) var(--space-sm);
             }
         }
 
@@ -635,10 +662,8 @@
     </style>
 </head>
 <body>
-    <!-- 배경 요소 -->
     <div class="blob"></div>
     
-    <!-- 기어 배경 SVG -->
     <svg class="gear-background" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <path d="M50 10 L55 20 L65 20 L70 10 L75 20 L85 25 L80 35 L90 40 L85 50 L90 60 L80 65 L85 75 L75 80 L70 90 L65 80 L55 80 L50 90 L45 80 L35 80 L30 90 L25 80 L15 75 L20 65 L10 60 L15 50 L10 40 L20 35 L15 25 L25 20 L30 10 L35 20 L45 20 Z" 
               fill="none" 
@@ -647,9 +672,6 @@
         <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="2"/>
     </svg>
 
-    <!-- ============================================
-         히어로 섹션
-    ============================================ -->
     <section class="hero-section">
         <h1 class="hero-title">
             <span class="line"><span>AI/ML</span></span>
@@ -662,9 +684,6 @@
         </p>
     </section>
 
-    <!-- ============================================
-         마퀴 텍스트
-    ============================================ -->
     <div class="marquee-container">
         <div class="marquee">
             <div class="marquee-content">
@@ -698,9 +717,6 @@
         </div>
     </div>
 
-    <!-- ============================================
-         숫자 강조 섹션
-    ============================================ -->
     <section class="stats-hero fade-in-section">
         <div class="stats-grid">
             <div class="stat-item">
@@ -726,9 +742,6 @@
         </div>
     </section>
 
-    <!-- ============================================
-         기술 스택 섹션
-    ============================================ -->
     <div class="container fade-in-section">
         <section class="glass-card">
             <h2>Core Technology Stack</h2>
@@ -749,9 +762,6 @@
         </section>
     </div>
 
-    <!-- ============================================
-         프로젝트 상세 섹션
-    ============================================ -->
     <section class="project-section fade-in-section">
         <div class="project-header">
             <div class="project-subtitle">Graduation Project</div>
@@ -776,9 +786,6 @@
         </div>
     </section>
 
-    <!-- ============================================
-         기술적 문제 해결 과정
-    ============================================ -->
     <div class="container fade-in-section">
         <section class="glass-card">
             <h2>Problem Solving Journey</h2>
@@ -827,9 +834,6 @@
         </section>
     </div>
 
-    <!-- ============================================
-         시스템 아키텍처
-    ============================================ -->
     <div class="container fade-in-section">
         <section class="glass-card">
             <h2>System Architecture</h2>
@@ -849,9 +853,6 @@
         </section>
     </div>
 
-    <!-- ============================================
-         컨택트 섹션
-    ============================================ -->
     <div class="container fade-in-section">
         <section class="glass-card">
             <h2>Get In Touch</h2>
@@ -871,11 +872,7 @@
         <p>© 2026 DongUk KIM. Crafted with AI-Native Tools. All Rights Reserved.</p>
     </footer>
 
-    <!-- ============================================
-         JavaScript
-    ============================================ -->
     <script>
-        // 숫자 카운터 애니메이션
         function animateCounter(element, target, duration = 2000) {
             const start = 0;
             const increment = target / (duration / 16);
@@ -892,7 +889,6 @@
             }, 16);
         }
 
-        // Intersection Observer 설정
         const observerOptions = {
             threshold: 0.2,
             rootMargin: '0px 0px -80px 0px'
@@ -915,7 +911,6 @@
             });
         }, observerOptions);
 
-        // 초기화
         document.addEventListener('DOMContentLoaded', () => {
             const fadeInSections = document.querySelectorAll('.fade-in-section');
             fadeInSections.forEach(section => {
@@ -925,7 +920,6 @@
             console.log('✅ Portfolio loaded - Light theme active');
         });
 
-        // 부드러운 스크롤
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
