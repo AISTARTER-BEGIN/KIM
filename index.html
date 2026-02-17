@@ -8,7 +8,6 @@
     <style>
         /* ============================================
            CSS 변수 정의 (Design Tokens)
-           - 색상, 폰트, 간격 등을 중앙 관리하여 일관성 확보
         ============================================ */
         :root {
             /* 색상 팔레트 */
@@ -27,7 +26,7 @@
             --font-size-base: 16px;
             --line-height-base: 1.6;
             
-            /* 간격 시스템 (8px 기반 그리드) */
+            /* 간격 시스템 */
             --space-xs: 8px;
             --space-sm: 16px;
             --space-md: 24px;
@@ -42,7 +41,7 @@
         }
 
         /* ============================================
-           전역 리셋 및 기본 스타일
+           전역 리셋
         ============================================ */
         * { 
             margin: 0; 
@@ -51,7 +50,6 @@
         }
 
         html {
-            /* 스크롤 동작을 부드럽게 설정 */
             scroll-behavior: smooth;
         }
 
@@ -61,17 +59,16 @@
             font-family: var(--font-main);
             font-size: var(--font-size-base);
             line-height: var(--line-height-base);
-            min-height: 100vh;
             overflow-x: hidden;
             
-            /* 복합 그라데이션 배경으로 깊이감 연출 */
+            /* 복합 그라데이션 배경 */
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(88, 101, 242, 0.12) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(255, 0, 234, 0.08) 0%, transparent 40%);
         }
 
         /* ============================================
-           배경 애니메이션 요소 (Ambient Effects)
+           배경 애니메이션 요소
         ============================================ */
         .blob {
             position: fixed;
@@ -82,9 +79,8 @@
             border-radius: 50%;
             z-index: -1;
             opacity: 0.1;
-            /* 부드러운 움직임으로 역동성 부여 */
             animation: float 25s infinite alternate ease-in-out;
-            pointer-events: none; /* 마우스 이벤트 차단 */
+            pointer-events: none;
         }
 
         @keyframes float {
@@ -93,7 +89,7 @@
             100% { transform: translate(30%, 30%) scale(0.9); }
         }
 
-        /* 기어 배경 효과 (사용자 요청 기능) */
+        /* 기어 배경 SVG */
         .gear-background {
             position: fixed;
             top: 50%;
@@ -103,7 +99,6 @@
             opacity: 0.03;
             z-index: -1;
             pointer-events: none;
-            /* 느린 회전으로 엔지니어링 정체성 표현 */
             animation: rotate-gear 60s linear infinite;
         }
 
@@ -113,53 +108,225 @@
         }
 
         /* ============================================
-           레이아웃 컨테이너
+           풀스크린 섹션 레이아웃 (Synchronized 스타일)
         ============================================ */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: var(--space-2xl) var(--space-md);
+        .fullscreen-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg) var(--space-md);
+            position: relative;
+        }
+
+        /* 스크롤 애니메이션용 클래스 */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s var(--transition-slow), 
+                        transform 1s var(--transition-slow);
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* ============================================
-           헤더 섹션 (Hero Section)
+           히어로 섹션 (초대형 타이포그래피)
         ============================================ */
-        header {
-            margin-bottom: var(--space-xl);
-            /* 페이드인 애니메이션으로 첫인상 강화 */
-            animation: fadeInUp 1s var(--transition-slow) backwards;
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--space-md);
+            position: relative;
+            overflow: hidden;
         }
 
-        header h1 {
-            /* 반응형 타이포그래피 (clamp 사용) */
-            font-size: clamp(2rem, 6vw, 4.5rem);
+        .hero-title {
+            font-size: clamp(3rem, 12vw, 10rem);
             font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: var(--space-md);
-            letter-spacing: -0.04em;
+            line-height: 0.9;
+            letter-spacing: -0.05em;
             color: var(--text-primary);
+            margin-bottom: var(--space-md);
+            /* 텍스트 분할 효과 */
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
         }
 
-        header .accent {
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: inline-block;
+            animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        }
+
+        .hero-title .line:nth-child(1) span { animation-delay: 0.1s; }
+        .hero-title .line:nth-child(2) span { animation-delay: 0.2s; }
+        .hero-title .line:nth-child(3) span { animation-delay: 0.3s; }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero-title .accent {
             color: var(--accent-primary);
-            /* 텍스트 그라데이션 효과 */
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        header .subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
             color: var(--text-secondary);
             font-weight: 400;
-            max-width: 600px;
-            line-height: 1.7;
+            max-width: 700px;
+            line-height: 1.8;
+            margin-bottom: var(--space-xl);
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* ============================================
-           글래스모피즘 카드 컴포넌트
-           - 반투명 배경 + 블러 효과로 모던한 UI 구현
+           마퀴(Marquee) 텍스트 효과
+           - Synchronized Studio의 시그니처 효과
+        ============================================ */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            padding: var(--space-md) 0;
+            margin: var(--space-xl) 0;
+        }
+
+        .marquee {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            padding-right: var(--space-lg);
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .marquee-separator {
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ============================================
+           컨테이너 (기존 스타일 유지하되 조정)
+        ============================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-md);
+        }
+
+        /* ============================================
+           숫자 강조 섹션 (Synchronized 스타일)
+        ============================================ */
+        .stats-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-xl);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: var(--space-xl);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            transition: all var(--transition-base);
+        }
+
+        .stat-item:hover {
+            background: var(--glass-hover);
+            border-color: var(--accent-primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(88, 101, 242, 0.2);
+        }
+
+        .stat-number {
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: var(--space-sm);
+            /* 카운터 애니메이션 대상 */
+        }
+
+        .stat-label {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .stat-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: var(--space-xs);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           글래스모피즘 카드 (개선 버전)
         ============================================ */
         .glass-card {
             background: var(--glass-bg);
@@ -170,14 +337,7 @@
             padding: var(--space-lg);
             margin-bottom: var(--space-md);
             transition: all var(--transition-base);
-            /* 스크롤 시 순차적 등장 애니메이션 */
-            animation: fadeInUp 0.8s var(--transition-slow) backwards;
         }
-
-        .glass-card:nth-child(2) { animation-delay: 0.1s; }
-        .glass-card:nth-child(3) { animation-delay: 0.2s; }
-        .glass-card:nth-child(4) { animation-delay: 0.3s; }
-        .glass-card:nth-child(5) { animation-delay: 0.4s; }
 
         .glass-card:hover {
             border-color: rgba(255, 255, 255, 0.2);
@@ -187,47 +347,35 @@
         }
 
         /* ============================================
-           타이포그래피 스타일
+           타이포그래피
         ============================================ */
         h2 {
-            font-size: clamp(1.3rem, 3vw, 1.5rem);
-            font-weight: 700;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
             margin-bottom: var(--space-lg);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
             color: var(--text-primary);
             text-transform: uppercase;
-            position: relative;
-            padding-bottom: var(--space-sm);
-        }
-
-        /* 섹션 제목 하단 악센트 라인 */
-        h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--accent-primary);
-            border-radius: 2px;
+            line-height: 1.1;
         }
 
         h3 {
-            font-size: 1.3rem;
+            font-size: clamp(1.3rem, 3vw, 2rem);
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: var(--space-sm);
+            letter-spacing: -0.02em;
         }
 
         p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            line-height: 1.8;
             margin-bottom: var(--space-sm);
         }
 
         /* ============================================
-           기술 스택 태그 시스템
+           기술 스택 태그
         ============================================ */
         .tech-tags {
             display: flex;
@@ -237,9 +385,9 @@
 
         .tag {
             background: rgba(255, 255, 255, 0.05);
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             border: 1px solid var(--glass-border);
             color: var(--text-secondary);
@@ -250,99 +398,60 @@
         .tag:hover {
             color: var(--text-primary);
             border-color: var(--accent-primary);
-            background: rgba(88, 101, 242, 0.1);
+            background: rgba(88, 101, 242, 0.15);
             transform: translateY(-2px);
         }
 
         /* ============================================
-           프로젝트 상세 섹션 스타일
+           프로젝트 섹션
         ============================================ */
-        .project-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: var(--space-sm);
-            margin-bottom: var(--space-md);
+        .project-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-2xl) var(--space-md);
         }
 
-        .project-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            flex: 1;
+        .project-header {
+            margin-bottom: var(--space-xl);
         }
 
         .project-subtitle {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--accent-primary);
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
             margin-bottom: var(--space-xs);
         }
 
-        /* 상태 배지 (In Progress, Completed 등) */
+        .project-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-md);
+        }
+
         .status-badge {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            padding: 6px 12px;
-            border-radius: 4px;
-            background: var(--accent-primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            background: #2ea043;
             color: #fff;
         }
 
-        .status-badge.completed {
-            background: #2ea043;
-        }
-
         /* ============================================
-           성과 지표 그리드 (Metrics Grid)
-        ============================================ */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-md);
-            margin: var(--space-md) 0;
-        }
-
-        .metric-item {
-            text-align: center;
-            padding: var(--space-md);
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-            transition: all var(--transition-base);
-        }
-
-        .metric-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: scale(1.05);
-        }
-
-        .metric-value {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--accent-primary);
-            display: block;
-            margin-bottom: var(--space-xs);
-        }
-
-        .metric-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* ============================================
-           타임라인 스타일 (문제 해결 과정 표현)
+           타임라인
         ============================================ */
         .timeline {
             position: relative;
             padding-left: var(--space-lg);
-            margin: var(--space-md) 0;
+            margin: var(--space-lg) 0;
         }
 
         .timeline::before {
@@ -359,7 +468,7 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: var(--space-md);
+            margin-bottom: var(--space-lg);
             padding-left: var(--space-md);
         }
 
@@ -368,8 +477,8 @@
             position: absolute;
             left: -26px;
             top: 4px;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background: var(--accent-primary);
             border-radius: 50%;
             box-shadow: 0 0 0 4px var(--bg-primary),
@@ -379,29 +488,31 @@
         .timeline-title {
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            font-size: 1.1rem;
         }
 
         .timeline-desc {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         /* ============================================
-           리스트 스타일링
+           리스트 스타일
         ============================================ */
         ul {
             list-style: none;
-            margin: var(--space-sm) 0;
+            margin: var(--space-md) 0;
         }
 
         ul li {
             position: relative;
             padding-left: var(--space-md);
-            margin-bottom: var(--space-xs);
+            margin-bottom: var(--space-sm);
             color: var(--text-secondary);
             font-size: 0.95rem;
+            line-height: 1.7;
         }
 
         ul li::before {
@@ -412,95 +523,102 @@
             font-weight: bold;
         }
 
+        ul li strong {
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           시스템 아키텍처 코드 블록
+        ============================================ */
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            padding: var(--space-md);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-primary);
+            margin: var(--space-md) 0;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.9;
+            display: block;
+            font-family: 'Courier New', monospace;
+        }
+
         /* ============================================
            푸터
         ============================================ */
         footer {
             margin-top: var(--space-2xl);
-            padding-top: var(--space-lg);
+            padding: var(--space-xl) var(--space-md);
             border-top: 1px solid var(--glass-border);
             text-align: center;
         }
 
         footer p {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             letter-spacing: 0.05em;
         }
 
         /* ============================================
-           애니메이션 키프레임
-        ============================================ */
-        @keyframes fadeInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        /* ============================================
-           반응형 디자인 (Mobile First Approach)
+           반응형 디자인
         ============================================ */
         @media (max-width: 768px) {
-            .container { 
-                padding: var(--space-xl) var(--space-sm); 
+            .hero-title {
+                font-size: clamp(2.5rem, 10vw, 5rem);
             }
-            
-            .glass-card { 
-                padding: var(--space-md); 
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
             }
-            
-            .metrics-grid {
-                grid-template-columns: 1fr 1fr;
+
+            .marquee-item {
+                font-size: clamp(1.2rem, 5vw, 2rem);
             }
-            
-            .timeline {
-                padding-left: var(--space-md);
-            }
-            
+
             .gear-background {
                 width: 200px;
                 height: 200px;
                 right: -80px;
             }
-        }
 
-        @media (max-width: 480px) {
-            .metrics-grid {
-                grid-template-columns: 1fr;
+            .timeline {
+                padding-left: var(--space-md);
             }
         }
 
         /* ============================================
-           접근성 개선
+           접근성 (Accessibility)
         ============================================ */
-        /* 포커스 스타일 강화 (키보드 네비게이션) */
-        a:focus, 
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* 포커스 스타일 */
+        a:focus,
         button:focus,
         .tag:focus {
             outline: 2px solid var(--accent-primary);
             outline-offset: 4px;
         }
-
-        /* 다크모드 선호 사용자 대응 (이미 다크모드이므로 동일 유지) */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- 배경 애니메이션 요소들 -->
+    <!-- 배경 요소 -->
     <div class="blob"></div>
     
-    <!-- 기어 배경 SVG (엔지니어링 정체성 표현) -->
+    <!-- 기어 배경 SVG -->
     <svg class="gear-background" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <path d="M50 10 L55 20 L65 20 L70 10 L75 20 L85 25 L80 35 L90 40 L85 50 L90 60 L80 65 L85 75 L75 80 L70 90 L65 80 L55 80 L50 90 L45 80 L35 80 L30 90 L25 80 L15 75 L20 65 L10 60 L15 50 L10 40 L20 35 L15 25 L25 20 L30 10 L35 20 L45 20 Z" 
               fill="none" 
@@ -509,24 +627,91 @@
         <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="2"/>
     </svg>
 
-    <div class="container">
-        <!-- ============================================
-             히어로 섹션: 첫인상과 핵심 메시지 전달
-        ============================================ -->
-        <header>
-            <h1>
-                AI/ML Engineer<br>
-                <span class="accent">DongUk KIM</span>
-            </h1>
-            <p class="subtitle">
-                Computer Vision & Embedded Systems 전문가로, 실생활 문제를 머신러닝과 IoT 기술로 해결합니다. 
-                MobileNetV2, CNN/SVM 통합 학습, 라즈베리파이 최적화에 강점을 가지고 있습니다.
-            </p>
-        </header>
+    <!-- ============================================
+         히어로 섹션 (초대형 타이포그래피)
+    ============================================ -->
+    <section class="hero-section">
+        <h1 class="hero-title">
+            <span class="line"><span>AI/ML</span></span>
+            <span class="line"><span>ENGINEER</span></span>
+            <span class="line"><span class="accent">DONGUK KIM</span></span>
+        </h1>
+        <p class="hero-subtitle">
+            Computer Vision & Embedded Systems 전문가로, 실생활 문제를 머신러닝과 IoT 기술로 해결합니다. 
+            MobileNetV2, CNN/SVM 통합 학습, 라즈베리파이 최적화에 강점을 가지고 있습니다.
+        </p>
+    </section>
 
-        <!-- ============================================
-             핵심 기술 스택 섹션
-        ============================================ -->
+    <!-- ============================================
+         마퀴 텍스트 (무한 스크롤 효과)
+    ============================================ -->
+    <div class="marquee-container">
+        <div class="marquee">
+            <!-- 첫 번째 반복 -->
+            <div class="marquee-content">
+                <span class="marquee-item">SIDS Prevention</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">Computer Vision</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">MobileNetV2</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">CNN + SVM</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">Raspberry Pi</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">TensorFlow Lite</span>
+                <span class="marquee-separator"></span>
+            </div>
+            <!-- 두 번째 반복 (무한 스크롤 효과를 위해 복제) -->
+            <div class="marquee-content">
+                <span class="marquee-item">SIDS Prevention</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">Computer Vision</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">MobileNetV2</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">CNN + SVM</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">Raspberry Pi</span>
+                <span class="marquee-separator"></span>
+                <span class="marquee-item">TensorFlow Lite</span>
+                <span class="marquee-separator"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         숫자 강조 섹션 (Synchronized 스타일)
+    ============================================ -->
+    <section class="stats-hero fade-in-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number" data-target="1000">0</span>
+                <div class="stat-label">Training Images</div>
+                <p class="stat-description">아기 얼굴 학습 데이터셋</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="8">0</span>
+                <div class="stat-label">% Accuracy Boost</div>
+                <p class="stat-description">CNN+SVM 통합으로 향상</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="4">0</span>
+                <div class="stat-label">Seconds Detection</div>
+                <p class="stat-description">기상 상태 판단 시간</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="100">0</span>
+                <div class="stat-label">% Real-time</div>
+                <p class="stat-description">라즈베리파이 실시간 추론</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         기술 스택 섹션
+    ============================================ -->
+    <div class="container fade-in-section">
         <section class="glass-card">
             <h2>Core Technology Stack</h2>
             <div class="tech-tags">
@@ -544,45 +729,25 @@
                 <span class="tag">Claude AI / Cursor AI</span>
             </div>
         </section>
+    </div>
 
-        <!-- ============================================
-             주요 프로젝트: 졸업작품 (SIDS 예방 시스템)
-        ============================================ -->
-        <section class="glass-card">
-            <div class="project-header">
-                <div>
-                    <div class="project-subtitle">Graduation Project</div>
-                    <h3 class="project-title">AI 기반 영아급사증후군(SIDS) 예방 모니터링 시스템</h3>
-                </div>
-                <span class="status-badge completed">Completed</span>
-            </div>
-            
+    <!-- ============================================
+         프로젝트 상세 섹션
+    ============================================ -->
+    <section class="project-section fade-in-section">
+        <div class="project-header">
+            <div class="project-subtitle">Graduation Project</div>
+            <h2 class="project-title">AI 기반 영아급사증후군(SIDS) 예방 모니터링 시스템</h2>
+            <span class="status-badge">Completed</span>
+        </div>
+        
+        <div class="glass-card">
             <p>
                 라즈베리파이와 컴퓨터 비전 기술을 활용하여 아기의 수면 상태를 실시간으로 모니터링하고, 
                 위험 상황을 자동 감지하는 임베디드 AI 시스템을 개발했습니다.
             </p>
 
-            <!-- 성과 지표 그리드 -->
-            <div class="metrics-grid">
-                <div class="metric-item">
-                    <span class="metric-value">1000+</span>
-                    <span class="metric-label">학습 이미지</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-value">+8%</span>
-                    <span class="metric-label">정확도 향상</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-value">7:3</span>
-                    <span class="metric-label">Train/Val 비율</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-value">4초</span>
-                    <span class="metric-label">기상 감지 시간</span>
-                </div>
-            </div>
-
-            <h3 style="font-size: 1.1rem; margin-top: var(--space-lg); margin-bottom: var(--space-sm);">핵심 기술</h3>
+            <h3 style="font-size: 1.3rem; margin-top: var(--space-lg); margin-bottom: var(--space-md);">핵심 기술</h3>
             <ul>
                 <li><strong>얼굴 인식:</strong> MediaPipe를 활용한 적응형 히트박스 생성으로 다양한 거리에서 인식률 획기적 개선</li>
                 <li><strong>눈 상태 분류:</strong> MobileNetV2 기반 전이학습 + CNN/SVM 통합 모델로 검증률 8% 향상</li>
@@ -590,11 +755,13 @@
                 <li><strong>SIDS 예방 로직:</strong> 양쪽 눈 간격 포착으로 엎드린 자세(위험 자세) 자동 감지</li>
                 <li><strong>개인화 시스템:</strong> 앱을 통한 개인별 기준점 재설정 기능으로 범용성 확보</li>
             </ul>
-        </section>
+        </div>
+    </section>
 
-        <!-- ============================================
-             기술적 문제 해결 과정 (타임라인)
-        ============================================ -->
+    <!-- ============================================
+         기술적 문제 해결 과정
+    ============================================ -->
+    <div class="container fade-in-section">
         <section class="glass-card">
             <h2>Problem Solving Journey</h2>
             
@@ -640,30 +807,34 @@
                 </div>
             </div>
         </section>
+    </div>
 
-        <!-- ============================================
-             시스템 아키텍처 섹션
-        ============================================ -->
+    <!-- ============================================
+         시스템 아키텍처
+    ============================================ -->
+    <div class="container fade-in-section">
         <section class="glass-card">
             <h2>System Architecture</h2>
             <p style="margin-bottom: var(--space-md);">
                 센서 통합, 실시간 영상 처리, AI 추론, 액추에이터 제어를 하나의 파이프라인으로 구성:
             </p>
             
-            <div style="background: rgba(0,0,0,0.3); padding: var(--space-md); border-radius: 8px; border-left: 3px solid var(--accent-primary);">
-                <code style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8; display: block;">
-                    📷 Raspberry Pi Camera → MediaPipe 얼굴 인식<br>
-                    &nbsp;&nbsp;&nbsp;→ 눈 영역 크롭 → TFLite 모델 추론 (Open/Close)<br>
-                    &nbsp;&nbsp;&nbsp;→ 눈 간격 체크 (SIDS 위험 판단)<br>
-                    &nbsp;&nbsp;&nbsp;→ 4초 이상 눈 뜸 감지 시 🎵 음악 재생<br>
-                    &nbsp;&nbsp;&nbsp;→ 🌡️ 온습도 센서 + 💧 초음파 가습기 센서 병렬 작동
+            <div class="code-block">
+                <code>
+📷 Raspberry Pi Camera → MediaPipe 얼굴 인식<br>
+&nbsp;&nbsp;&nbsp;→ 눈 영역 크롭 → TFLite 모델 추론 (Open/Close)<br>
+&nbsp;&nbsp;&nbsp;→ 눈 간격 체크 (SIDS 위험 판단)<br>
+&nbsp;&nbsp;&nbsp;→ 4초 이상 눈 뜸 감지 시 🎵 음악 재생<br>
+&nbsp;&nbsp;&nbsp;→ 🌡️ 온습도 센서 + 💧 초음파 가습기 센서 병렬 작동
                 </code>
             </div>
         </section>
+    </div>
 
-        <!-- ============================================
-             추가 학습 및 관심사 섹션 (향후 확장용)
-        ============================================ -->
+    <!-- ============================================
+         추가 학습 섹션
+    ============================================ -->
+    <div class="container fade-in-section">
         <section class="glass-card">
             <h2>Continuous Learning</h2>
             <p>
@@ -676,10 +847,12 @@
                 <li><strong>AI-Native 개발:</strong> Claude Code, Cursor AI를 활용한 차세대 개발 워크플로우 실험</li>
             </ul>
         </section>
+    </div>
 
-        <!-- ============================================
-             컨택트 섹션 (향후 폼 추가 예정)
-        ============================================ -->
+    <!-- ============================================
+         컨택트 섹션
+    ============================================ -->
+    <div class="container fade-in-section">
         <section class="glass-card">
             <h2>Get In Touch</h2>
             <p>
@@ -692,24 +865,97 @@
                 <span class="tag">🔗 LinkedIn (준비 중)</span>
             </div>
         </section>
-
-        <footer>
-            <p>© 2026 DongUk KIM. Crafted with AI-Native Tools. All Rights Reserved.</p>
-        </footer>
     </div>
 
+    <footer>
+        <p>© 2026 DongUk KIM. Crafted with AI-Native Tools. All Rights Reserved.</p>
+    </footer>
+
     <!-- ============================================
-         향후 추가될 JavaScript 인터랙션
-         - 스크롤 애니메이션
-         - 마우스 커서 이펙트
-         - 다이나믹 메트릭 카운터
+         JavaScript: 인터랙션 구현
     ============================================ -->
     <script>
-        // 페이지 로드 완료 시 초기화
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Portfolio loaded successfully');
-            // 향후 인터랙티브 기능 추가 예정
+        // ============================================
+        // 1. 숫자 카운터 애니메이션 (Intersection Observer 기반)
+        // ============================================
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16); // 60fps 기준
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (target === 8 || target === 100 ? '' : '+');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (target === 8 || target === 100 ? '' : '+');
+                }
+            }, 16);
+        }
+
+        // ============================================
+        // 2. Intersection Observer 설정 (스크롤 애니메이션)
+        // ============================================
+        const observerOptions = {
+            threshold: 0.2, // 요소의 20%가 보일 때 트리거
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    
+                    // 숫자 카운터가 있는 섹션이면 애니메이션 시작
+                    if (entry.target.classList.contains('stats-hero')) {
+                        const counters = entry.target.querySelectorAll('.stat-number');
+                        counters.forEach(counter => {
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            animateCounter(counter, target);
+                        });
+                        observer.unobserve(entry.target); // 한 번만 실행
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // ============================================
+        // 3. 페이드인 섹션 관찰 시작
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeInSections = document.querySelectorAll('.fade-in-section');
+            fadeInSections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // 콘솔 로그 (개발 확인용)
+            console.log('✅ Portfolio loaded successfully');
+            console.log('🎨 Synchronized-inspired design active');
+            console.log('🚀 Scroll animations ready');
         });
+
+        // ============================================
+        // 4. 부드러운 스크롤 동작 (앵커 링크용)
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ============================================
+        // 5. 마퀴 애니메이션 최적화 (CSS로 구현되어 있으나 추가 제어 가능)
+        // ============================================
+        // 현재는 CSS 애니메이션으로 충분하므로 추가 JS 불필요
+        // 필요 시 requestAnimationFrame으로 성능 최적화 가능
     </script>
 </body>
 </html>
