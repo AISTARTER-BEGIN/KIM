@@ -595,138 +595,6 @@
             font-family: 'Courier New', monospace;
         }
 
-        /* --- Engineering Schematic Style (Learning Status) --- */
-        .schematic-section {
-            max-width: 1050px;
-            margin: var(--space-xl) auto;
-            padding: var(--space-lg);
-            border: 1px solid var(--border-strong);
-            background: transparent;
-            position: relative;
-            font-family: var(--font-main);
-        }
-
-        .schematic-section::before, 
-        .schematic-section::after {
-            content: '';
-            position: absolute;
-            width: 12px; height: 12px;
-            border: 1.5px solid var(--accent-primary);
-        }
-        .schematic-section::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-        .schematic-section::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-
-        .schematic-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            border-bottom: 1px solid var(--border-strong);
-            padding-bottom: var(--space-sm);
-            margin-bottom: var(--space-md);
-        }
-
-        .schematic-title {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-primary);
-            margin: 0;
-            font-weight: 800;
-        }
-
-        .schematic-title::before {
-            content: '■ ';
-            color: var(--accent-primary);
-            font-size: 0.8em;
-            vertical-align: middle;
-        }
-
-        .mono-text {
-            font-family: 'Courier New', monospace;
-            font-size: 0.85em;
-            color: var(--text-secondary);
-            letter-spacing: 0.05em;
-        }
-
-        .schematic-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-md);
-        }
-
-        .schematic-module {
-            border: 1px dashed var(--border-medium);
-            padding: var(--space-md);
-            background: rgba(0, 102, 255, 0.015);
-        }
-
-        .module-label {
-            font-family: 'Courier New', monospace;
-            font-size: 0.75rem;
-            color: var(--accent-primary);
-            margin-bottom: var(--space-xs);
-            letter-spacing: 0.1em;
-        }
-
-        .module-value {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: var(--space-sm);
-            word-break: keep-all;
-        }
-
-        .schematic-progress-bar {
-            height: 2px;
-            background: var(--border-medium);
-            width: 100%;
-            position: relative;
-            margin-top: var(--space-sm);
-        }
-
-        .schematic-progress-fill {
-            height: 100%;
-            background: var(--accent-primary);
-            position: relative;
-            width: 84%; /* 720/850 비율 */
-        }
-
-        .schematic-progress-fill::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: -4px;
-            width: 2px;
-            height: 10px;
-            background: var(--text-primary);
-        }
-
-        .schematic-footer {
-            margin-top: var(--space-md);
-            padding-top: var(--space-sm);
-            border-top: 1px dotted var(--border-medium);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--accent-success);
-            border-radius: 50%;
-        }
-
-        .pulsing {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.4); }
-            70% { box-shadow: 0 0 0 5px rgba(0, 200, 83, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
-        }
-
         footer {
             margin-top: var(--space-2xl);
             padding: var(--space-xl) var(--space-md);
@@ -825,6 +693,7 @@
         <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="2"/>
     </svg>
 
+    <!-- 복사 완료 토스트 알림 -->
     <div class="toast" id="copyToast">📋 이메일 주소가 복사되었습니다!</div>
 
     <section class="hero-section">
@@ -1033,32 +902,46 @@
         </section>
     </div>
 
+    <!-- Learning Status Section -->
     <div class="container fade-in-section">
-        <section class="schematic-section" id="sync-monitor">
-            <div class="schematic-header">
-                <h2 class="schematic-title">System.Learning_Status</h2>
-                <div class="schematic-date">LAST_SYNC: <span class="mono-text" id="status-date">2026-02-18</span></div>
-            </div>
-            
-            <div class="schematic-grid">
-                <div class="schematic-module">
-                    <div class="module-label">[MOD_01] LANG::CHINESE</div>
-                    <div class="module-value" id="status-chinese">HSK 4급 준비 중</div>
-                    <div class="mono-text" style="font-size: 0.75em; opacity: 0.7;">// 努力是有回报的</div>
-                </div>
-                
-                <div class="schematic-module">
-                    <div class="module-label">[MOD_02] CERT::TOEIC</div>
-                    <div class="module-value" id="status-toeic">850+ 목표 (현재 720)</div>
-                    <div class="schematic-progress-bar">
-                        <div class="schematic-progress-fill"></div>
-                    </div>
-                </div>
+        <section class="glass-card" id="sync-monitor">
+            <h2>Learning Status</h2>
+
+            <!-- Badge Message -->
+            <div style="margin-bottom: var(--space-lg); text-align: center;">
+                <span class="status-badge" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); font-size: 0.75rem; padding: 10px 20px;">
+                    🤖 AI-Driven Engineer Mode: Active
+                </span>
             </div>
 
-            <div class="schematic-footer">
-                <span class="status-dot pulsing"></span>
-                <span class="mono-text" id="status-badge" style="color: var(--accent-success); font-weight: bold;">AI-Driven Engineer Mode: Active</span>
+            <!-- TOEIC Progress -->
+            <div style="background: linear-gradient(135deg, rgba(0, 102, 255, 0.03), rgba(0, 212, 255, 0.03)); border-radius: 18px; padding: var(--space-lg); border-left: 4px solid var(--accent-secondary); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);">
+                <h3 style="margin-bottom: var(--space-md); display: flex; align-items: center; gap: 10px;">
+                    📚 TOEIC Progress
+                </h3>
+
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-sm);">
+                    <div>
+                        <span style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">705</span>
+                        <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600;"> / 990</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;">Last Update</div>
+                        <div style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 600;">2026-02-18</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div style="position: relative; width: 100%; height: 32px; background: var(--bg-secondary); border-radius: 16px; overflow: hidden; border: 2px solid var(--border-light); box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.06);">
+                    <div style="position: absolute; top: 0; left: 0; height: 100%; width: 71.2%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); border-radius: 14px; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);"></div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 800; color: var(--text-primary); z-index: 2; text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);">71.2%</div>
+                </div>
+
+                <!-- Progress Description -->
+                <p style="margin-top: var(--space-md); font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+                    목표 점수 990점 중 <strong style="color: var(--accent-primary);">705점</strong>을 달성했습니다.
+                    지속적인 학습을 통해 영어 커뮤니케이션 역량을 강화하고 있습니다.
+                </p>
             </div>
         </section>
     </div>
