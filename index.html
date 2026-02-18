@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio – AI / ML Engineer</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -14,47 +13,29 @@
   />
 
   <style>
-    /* ============================================================
-       CSS 커스텀 변수 — 다크 시네마틱 컬러 팔레트
-    ============================================================ */
     :root {
       --bg-void:       #020202;
       --bg-deep:       #070a0f;
       --bg-surface:    #0d1117;
       --bg-elevated:   #131920;
-
       --accent-gold:   #c8922a;
       --accent-amber:  #e8a83a;
       --accent-glow:   #f0b84a;
       --accent-green:  #1a9a5c;
-
       --text-primary:  #f0ece4;
       --text-secondary:#9a9080;
       --text-muted:    #4a4540;
       --text-accent:   #c8922a;
-
       --border-subtle: rgba(200,146,42,0.15);
       --border-glow:   rgba(200,146,42,0.4);
-
       --font-sans:     'Inter', 'Noto Sans KR', sans-serif;
-
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ============================================================
-       전역 리셋 및 기본 설정
-    ============================================================ */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     body {
       font-family: var(--font-sans);
@@ -65,998 +46,513 @@
       cursor: none;
     }
 
-    /* ============================================================
-       커스텀 커서
-    ============================================================ */
     .cursor {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background: var(--accent-gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 10000;
+      position: fixed; width: 10px; height: 10px;
+      background: var(--accent-gold); border-radius: 50%;
+      pointer-events: none; z-index: 10000;
       transform: translate(-50%, -50%);
       transition: width 0.3s ease, height 0.3s ease;
       mix-blend-mode: difference;
     }
 
     .cursor-follower {
-      position: fixed;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(200,146,42,0.5);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
+      position: fixed; width: 40px; height: 40px;
+      border: 1px solid rgba(200,146,42,0.5); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
       transform: translate(-50%, -50%);
       transition: width 0.4s ease, height 0.4s ease, border-color 0.3s ease;
     }
 
-    /* ============================================================
-       파티클 캔버스
-    ============================================================ */
     #particle-canvas {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
+      pointer-events: none; z-index: 0; opacity: 0.6;
     }
 
-    /* ============================================================
-       네비게이션
-    ============================================================ */
     .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      padding: 20px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000; padding: 20px 5%;
+      display: flex; align-items: center; justify-content: space-between;
       transition: background 0.5s ease, padding 0.3s ease;
     }
 
     .nav.scrolled {
       background: rgba(2,2,2,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 14px 5%;
-      border-bottom: 1px solid var(--border-subtle);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding: 14px 5%; border-bottom: 1px solid var(--border-subtle);
     }
 
     .nav-logo {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      text-decoration: none;
-      position: relative;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--accent-gold);
+      text-decoration: none; position: relative;
     }
-
     .nav-logo::after {
-      content: '';
-      position: absolute;
-      bottom: -3px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent-gold);
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: var(--accent-gold);
       transition: width 0.4s var(--ease-out-expo);
     }
     .nav-logo:hover::after { width: 100%; }
 
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
 
     .nav-links a {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.3s ease;
-      position: relative;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-secondary);
+      text-decoration: none; transition: color 0.3s ease; position: relative;
     }
-
     .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent-gold);
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--accent-gold);
       transition: width 0.3s var(--ease-out-expo);
     }
-
     .nav-links a:hover { color: var(--accent-gold); }
     .nav-links a:hover::after { width: 100%; }
 
-    /* ============================================================
-       히어로 섹션
-    ============================================================ */
     .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 5%;
-      overflow: hidden;
-      z-index: 1;
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 0 5%; overflow: hidden; z-index: 1;
     }
-
     .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      content: ''; position: absolute; inset: 0;
       background:
         radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,146,42,0.08) 0%, transparent 60%),
         radial-gradient(ellipse 50% 40% at 80% 80%, rgba(26,154,92,0.06) 0%, transparent 50%),
         radial-gradient(ellipse 40% 50% at 10% 60%, rgba(200,146,42,0.04) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
+      pointer-events: none; z-index: -1;
     }
-
     .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
       height: 200px;
       background: linear-gradient(to bottom, transparent, var(--bg-void));
-      pointer-events: none;
-      z-index: 2;
+      pointer-events: none; z-index: 2;
     }
 
     .hero-eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: 28px;
-      opacity: 0;
-      transform: translateY(20px);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--accent-gold);
+      margin-bottom: 28px; opacity: 0; transform: translateY(20px);
       animation: fadeUp 0.8s var(--ease-out-expo) 0.3s forwards;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      display: flex; align-items: center; gap: 12px;
     }
-
-    .hero-eyebrow::before,
-    .hero-eyebrow::after {
-      content: '';
-      display: block;
-      width: 30px; height: 1px;
-      background: var(--accent-gold);
-      opacity: 0.6;
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: block; width: 30px; height: 1px;
+      background: var(--accent-gold); opacity: 0.6;
     }
 
     .hero-title {
-      font-size: clamp(48px, 8vw, 110px);
-      font-weight: 900;
-      line-height: 0.92;
-      letter-spacing: -0.03em;
-      margin-bottom: 32px;
-      opacity: 0;
+      font-size: clamp(48px, 8vw, 110px); font-weight: 900;
+      line-height: 0.92; letter-spacing: -0.03em;
+      margin-bottom: 32px; opacity: 0;
       animation: fadeUp 1s var(--ease-out-expo) 0.5s forwards;
     }
-
     .hero-title .line-1 { display: block; color: var(--text-primary); }
-
     .hero-title .line-2 {
       display: block;
       background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-amber) 50%, var(--accent-glow) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       filter: drop-shadow(0 0 30px rgba(200,146,42,0.3));
     }
-
     .hero-title .line-3 {
-      display: block;
-      color: var(--text-secondary);
-      font-weight: 300;
-      font-size: 0.5em;
-      letter-spacing: 0.05em;
-      margin-top: 16px;
+      display: block; color: var(--text-secondary); font-weight: 300;
+      font-size: 0.5em; letter-spacing: 0.05em; margin-top: 16px;
     }
 
     .hero-desc {
-      max-width: 560px;
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--text-secondary);
-      margin: 0 auto 48px;
-      opacity: 0;
-      animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
+      max-width: 560px; font-size: 16px; font-weight: 300; line-height: 1.8;
+      color: var(--text-secondary); margin: 0 auto 48px;
+      opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
     }
 
     .hero-actions {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 1s var(--ease-out-expo) 0.9s forwards;
+      display: flex; gap: 16px; align-items: center;
+      justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 0.9s forwards;
     }
 
     .scroll-indicator {
-      position: absolute;
-      bottom: 40px; left: 50%;
+      position: absolute; bottom: 40px; left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: fadeUp 1s var(--ease-out-expo) 1.4s forwards;
-      z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 1.4s forwards; z-index: 10;
     }
-
     .scroll-indicator span {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--text-muted);
+      font-size: 10px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--text-muted);
     }
-
     .scroll-line {
       width: 1px; height: 50px;
       background: linear-gradient(to bottom, var(--accent-gold), transparent);
       animation: scrollPulse 2s ease-in-out infinite;
     }
-
     @keyframes scrollPulse {
       0%, 100% { opacity: 0.3; transform: scaleY(1); }
       50%       { opacity: 1;   transform: scaleY(1.1); }
     }
 
-    /* ============================================================
-       공통 섹션 레이아웃
-    ============================================================ */
     section { position: relative; z-index: 1; }
 
-    .section-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 120px 5%;
-    }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 120px 5%; }
 
     .section-header { margin-bottom: 70px; }
 
     .section-tag {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--accent-gold);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
     }
-
     .section-tag::before {
-      content: '';
-      display: block;
-      width: 20px; height: 1px;
+      content: ''; display: block; width: 20px; height: 1px;
       background: var(--accent-gold);
     }
 
     .section-title {
-      font-size: clamp(32px, 4vw, 56px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--text-primary);
+      font-size: clamp(32px, 4vw, 56px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.1; color: var(--text-primary);
     }
-
     .section-title .highlight {
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
     .section-subtitle {
-      margin-top: 16px;
-      font-size: 16px;
-      font-weight: 300;
-      color: var(--text-secondary);
-      max-width: 500px;
-      line-height: 1.8;
+      margin-top: 16px; font-size: 16px; font-weight: 300;
+      color: var(--text-secondary); max-width: 500px; line-height: 1.8;
     }
 
-    /* ============================================================
-       버튼 스타일
-    ============================================================ */
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 32px;
-      background: var(--accent-gold);
-      color: var(--bg-void);
-      font-family: var(--font-sans);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      cursor: none;
-      position: relative;
-      overflow: hidden;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 32px; background: var(--accent-gold); color: var(--bg-void);
+      font-family: var(--font-sans); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+      border: none; cursor: none; position: relative; overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
+      content: ''; position: absolute; top: 0; left: -100%;
       width: 100%; height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
       transition: left 0.5s ease;
     }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 40px rgba(200,146,42,0.3);
-    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(200,146,42,0.3); }
     .btn-primary:hover::before { left: 100%; }
 
     .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 32px;
-      background: transparent;
-      color: var(--text-secondary);
-      font-family: var(--font-sans);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1px solid var(--border-subtle);
-      cursor: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 32px; background: transparent; color: var(--text-secondary);
+      font-family: var(--font-sans); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+      border: 1px solid var(--border-subtle); cursor: none;
       transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     }
-
     .btn-outline:hover {
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
+      border-color: var(--accent-gold); color: var(--accent-gold);
       transform: translateY(-2px);
     }
 
-    /* ============================================================
-       About 섹션
-    ============================================================ */
     .about { background: var(--bg-deep); }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 
     .about-text p {
-      font-size: 15px;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--text-secondary);
-      margin-bottom: 20px;
+      font-size: 15px; font-weight: 300; line-height: 1.9;
+      color: var(--text-secondary); margin-bottom: 20px;
     }
+    .about-text p strong { color: var(--text-primary); font-weight: 600; }
 
-    .about-text p strong {
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 32px;
-    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
 
     .skill-tag {
-      padding: 7px 16px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      background: rgba(200,146,42,0.08);
-      border: 1px solid rgba(200,146,42,0.2);
+      padding: 7px 16px; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold);
+      background: rgba(200,146,42,0.08); border: 1px solid rgba(200,146,42,0.2);
       transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
-
     .skill-tag:hover {
-      background: rgba(200,146,42,0.15);
-      border-color: var(--accent-gold);
+      background: rgba(200,146,42,0.15); border-color: var(--accent-gold);
       transform: translateY(-2px);
     }
 
     .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      background: var(--border-subtle);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: var(--border-subtle);
     }
-
     .stat-item {
-      background: var(--bg-surface);
-      padding: 32px 28px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s ease;
+      background: var(--bg-surface); padding: 32px 28px;
+      position: relative; overflow: hidden; transition: background 0.3s ease;
     }
-
     .stat-item::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 0;
-      background: var(--accent-gold);
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 0; background: var(--accent-gold);
       transition: height 0.4s var(--ease-out-expo);
     }
-
     .stat-item:hover { background: var(--bg-elevated); }
     .stat-item:hover::before { height: 100%; }
 
     .stat-number {
-      font-size: 40px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1;
+      font-size: 40px; font-weight: 900; letter-spacing: -0.03em; line-height: 1;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 8px;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
     }
-
     .stat-label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted);
     }
+    .stat-desc { font-size: 13px; color: var(--text-secondary); margin-top: 6px; font-weight: 300; }
 
-    .stat-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 6px;
-      font-weight: 300;
-    }
-
-    /* ============================================================
-       프로젝트 섹션 — Baby Sleep Monitor 단독
-    ============================================================ */
     .projects { background: var(--bg-void); }
 
     .project-featured-banner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      margin-bottom: 2px;
-      background: var(--border-subtle);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; margin-bottom: 2px; background: var(--border-subtle);
     }
 
     .banner-main {
-      background: var(--bg-surface);
-      padding: 56px 48px;
-      position: relative;
-      overflow: hidden;
+      background: var(--bg-surface); padding: 56px 48px;
+      position: relative; overflow: hidden;
     }
-
     .banner-main::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber), transparent);
     }
 
     .banner-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--accent-gold);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
     }
-
     .banner-label::before {
-      content: '';
-      display: block;
-      width: 16px; height: 1px;
+      content: ''; display: block; width: 16px; height: 1px;
       background: var(--accent-gold);
     }
 
     .banner-title {
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: var(--text-primary);
-      margin-bottom: 20px;
+      font-size: clamp(26px, 3vw, 38px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.15;
+      color: var(--text-primary); margin-bottom: 20px;
     }
 
     .banner-desc {
-      font-size: 14px;
-      font-weight: 300;
-      color: var(--text-secondary);
-      line-height: 1.85;
-      max-width: 460px;
+      font-size: 14px; font-weight: 300; color: var(--text-secondary);
+      line-height: 1.85; max-width: 460px;
     }
 
     .banner-side {
-      background: var(--bg-surface);
-      padding: 40px 36px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 20px;
+      background: var(--bg-surface); padding: 40px 36px;
+      display: flex; flex-direction: column; justify-content: center; gap: 20px;
     }
 
-    .metric-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .metric-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
 
     .metric-item {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border-subtle);
+      display: flex; align-items: baseline; gap: 12px;
+      padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);
     }
-
-    .metric-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
+    .metric-item:last-child { border-bottom: none; padding-bottom: 0; }
 
     .metric-value {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -0.02em;
+      font-size: 28px; font-weight: 900; letter-spacing: -0.02em;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      flex-shrink: 0;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; flex-shrink: 0;
     }
-
-    .metric-label {
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
+    .metric-label { font-size: 12px; font-weight: 400; color: var(--text-secondary); line-height: 1.5; }
 
     .pipeline-block {
-      background: var(--bg-void);
-      border: 1px solid var(--border-subtle);
-      padding: 24px 28px;
-      font-size: 12px;
+      background: var(--bg-void); border: 1px solid var(--border-subtle);
+      padding: 24px 28px; font-size: 12px;
       font-family: 'SF Mono', 'Fira Code', monospace;
-      color: var(--text-secondary);
-      line-height: 2.1;
-      position: relative;
+      color: var(--text-secondary); line-height: 2.1; position: relative;
     }
-
     .pipeline-block::before {
-      content: 'SYSTEM PIPELINE';
-      position: absolute;
-      top: -1px; right: 16px;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: var(--accent-gold);
-      background: var(--bg-void);
-      padding: 2px 8px;
-      border: 1px solid var(--border-subtle);
-      transform: translateY(-50%);
+      content: 'SYSTEM PIPELINE'; position: absolute; top: -1px; right: 16px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.2em; color: var(--accent-gold);
+      background: var(--bg-void); padding: 2px 8px;
+      border: 1px solid var(--border-subtle); transform: translateY(-50%);
     }
-
     .pipeline-block .hl-gold  { color: var(--accent-amber); }
     .pipeline-block .hl-green { color: var(--accent-green); }
 
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 28px;
-    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
 
     .project-tag {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      background: rgba(200,146,42,0.1);
-      color: var(--accent-gold);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 5px 12px;
+      background: rgba(200,146,42,0.1); color: var(--accent-gold);
       border: 1px solid rgba(200,146,42,0.2);
     }
-
     .project-tag.green {
-      background: rgba(26,154,92,0.1);
-      color: #1a9a5c;
+      background: rgba(26,154,92,0.1); color: #1a9a5c;
       border-color: rgba(26,154,92,0.2);
     }
 
-    /* ============================================================
-       경험 / 단일 프로젝트 블록
-    ============================================================ */
     .experience { background: var(--bg-deep); }
 
     .exp-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 40px;
-      padding-bottom: 40px;
-      border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 56px;
-      flex-wrap: wrap;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 56px; flex-wrap: wrap;
     }
-
     .exp-period {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      padding: 8px 18px;
-      border: 1px solid var(--border-glow);
-      background: rgba(200,146,42,0.06);
-      white-space: nowrap;
-      align-self: flex-start;
-      margin-top: 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--accent-gold);
+      padding: 8px 18px; border: 1px solid var(--border-glow);
+      background: rgba(200,146,42,0.06); white-space: nowrap;
+      align-self: flex-start; margin-top: 4px;
     }
-
     .exp-title-block { flex: 1; }
-
     .exp-title {
-      font-size: clamp(26px, 3vw, 40px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--text-primary);
-      margin-bottom: 10px;
+      font-size: clamp(26px, 3vw, 40px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.1; color: var(--text-primary); margin-bottom: 10px;
     }
-
-    .exp-subtitle {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-    }
+    .exp-subtitle { font-size: 14px; font-weight: 400; color: var(--text-muted); letter-spacing: 0.08em; }
 
     .exp-body {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      background: var(--border-subtle);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border-subtle);
     }
-
     .exp-block {
-      background: var(--bg-surface);
-      padding: 36px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s ease;
+      background: var(--bg-surface); padding: 36px 32px;
+      position: relative; overflow: hidden; transition: background 0.4s ease;
     }
-
     .exp-block::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, var(--accent-gold), transparent);
-      transform: scaleX(0);
-      transform-origin: left;
+      transform: scaleX(0); transform-origin: left;
       transition: transform 0.5s var(--ease-out-expo);
     }
-
     .exp-block:hover { background: var(--bg-elevated); }
     .exp-block:hover::after { transform: scaleX(1); }
-
-    .exp-block-icon {
-      font-size: 22px;
-      margin-bottom: 16px;
-      display: block;
-    }
-
+    .exp-block-icon { font-size: 22px; margin-bottom: 16px; display: block; }
     .exp-block-title {
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-      text-transform: uppercase;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.05em;
+      color: var(--text-primary); margin-bottom: 12px; text-transform: uppercase;
     }
+    .exp-block-desc { font-size: 13px; font-weight: 300; color: var(--text-secondary); line-height: 1.85; }
+    .exp-block-desc strong { color: var(--text-primary); font-weight: 600; }
 
-    .exp-block-desc {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--text-secondary);
-      line-height: 1.85;
-    }
-
-    .exp-block-desc strong {
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    /* ============================================================
-       스킬 바 섹션
-    ============================================================ */
     .skills { background: var(--bg-void); }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px 80px;
-    }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 80px; }
 
     .skill-group-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      margin-bottom: 24px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-subtle);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--accent-gold);
+      margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);
     }
-
     .skill-bar-item { margin-bottom: 20px; }
-
     .skill-bar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 8px;
+      display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;
     }
-
-    .skill-bar-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .skill-bar-pct {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--accent-gold);
-      letter-spacing: 0.05em;
-    }
-
-    .skill-bar-track {
-      height: 2px;
-      background: var(--bg-elevated);
-      position: relative;
-      overflow: hidden;
-    }
-
+    .skill-bar-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .skill-bar-pct { font-size: 11px; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.05em; }
+    .skill-bar-track { height: 2px; background: var(--bg-elevated); position: relative; overflow: hidden; }
     .skill-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber));
       box-shadow: 0 0 10px rgba(200,146,42,0.5);
-      transform: scaleX(0);
-      transform-origin: left;
+      transform: scaleX(0); transform-origin: left;
     }
 
-    /* TOEIC 게이지 */
     .english-gauge {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      padding: 48px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
+      background: var(--bg-surface); border: 1px solid var(--border-subtle);
+      padding: 48px; display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
     }
-
     .gauge-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
     }
-
     .gauge-score {
-      font-size: 72px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1;
+      font-size: 72px; font-weight: 900; letter-spacing: -0.04em; line-height: 1;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 4px;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 4px;
     }
-
-    .gauge-target {
-      font-size: 14px;
-      color: var(--text-muted);
-      font-weight: 300;
-    }
-
-    .gauge-bar-wrap {
-      background: var(--bg-elevated);
-      height: 4px;
-      margin-top: 24px;
-    }
-
+    .gauge-target { font-size: 14px; color: var(--text-muted); font-weight: 300; }
+    .gauge-bar-wrap { background: var(--bg-elevated); height: 4px; margin-top: 24px; }
     .gauge-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber));
       box-shadow: 0 0 12px rgba(200,146,42,0.6);
-      width: 0;
-      transition: width 1.5s var(--ease-out-expo) 0.3s;
+      width: 0; transition: width 1.5s var(--ease-out-expo) 0.3s;
     }
+    .gauge-desc { font-size: 15px; font-weight: 300; line-height: 1.9; color: var(--text-secondary); }
 
-    .gauge-desc {
-      font-size: 15px;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--text-secondary);
-    }
-
-    /* ============================================================
-       연락처 섹션
-    ============================================================ */
     .contact { background: var(--bg-void); }
-
-    .contact-inner {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 120px 5%;
-    }
-
+    .contact-inner { max-width: 800px; margin: 0 auto; text-align: center; padding: 120px 5%; }
     .contact-title {
-      font-size: clamp(40px, 6vw, 80px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 24px;
+      font-size: clamp(40px, 6vw, 80px); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 24px;
     }
-
     .contact-desc {
-      font-size: 16px;
-      font-weight: 300;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 48px;
+      font-size: 16px; font-weight: 300; color: var(--text-secondary);
+      line-height: 1.8; margin-bottom: 48px;
     }
+    .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-    .contact-links {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
+    /* contact-link — <a>와 <button> 모두 동일한 스타일 적용 */
     .contact-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: transparent;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; background: transparent;
+      border: 1px solid var(--border-subtle); color: var(--text-secondary);
+      font-family: var(--font-sans); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+      cursor: none;
       transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease;
     }
-
     .contact-link:hover {
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
-      background: rgba(200,146,42,0.06);
-      transform: translateY(-2px);
+      border-color: var(--accent-gold); color: var(--accent-gold);
+      background: rgba(200,146,42,0.06); transform: translateY(-2px);
     }
 
-    /* ============================================================
-       푸터
-    ============================================================ */
+    /* ✅ 이메일 복사 토스트 알림 */
+    .toast {
+      position: fixed; bottom: 40px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg-elevated); border: 1px solid var(--border-glow);
+      color: var(--accent-gold); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 14px 28px; z-index: 99999;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
     footer {
-      padding: 40px 5%;
-      border-top: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--bg-void);
-      position: relative;
-      z-index: 1;
+      padding: 40px 5%; border-top: 1px solid var(--border-subtle);
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-void); position: relative; z-index: 1;
     }
-
-    .footer-copy {
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-    }
-
+    .footer-copy { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
+    .footer-links { display: flex; gap: 24px; }
     .footer-links a {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      transition: color 0.3s ease;
+      font-size: 11px; color: var(--text-muted); text-decoration: none;
+      letter-spacing: 0.1em; transition: color 0.3s ease;
     }
-
     .footer-links a:hover { color: var(--accent-gold); }
 
-    /* ============================================================
-       스크롤 등장 애니메이션
-    ============================================================ */
     .reveal {
-      opacity: 0;
-      transform: translateY(40px);
+      opacity: 0; transform: translateY(40px);
       transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
     }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .delay-1 { transition-delay: 0.1s; }
     .delay-2 { transition-delay: 0.2s; }
     .delay-3 { transition-delay: 0.3s; }
     .delay-4 { transition-delay: 0.4s; }
 
-    /* ============================================================
-       키프레임
-    ============================================================ */
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* ============================================================
-       모바일 반응형
-    ============================================================ */
     @media (max-width: 900px) {
       .project-featured-banner { grid-template-columns: 1fr; }
       .exp-body { grid-template-columns: 1fr; }
-      .about-grid,
-      .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-grid, .skills-grid { grid-template-columns: 1fr; gap: 40px; }
       .exp-header { flex-direction: column; gap: 16px; }
     }
-
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .stat-grid { grid-template-columns: 1fr 1fr; }
@@ -1069,16 +565,10 @@
 </head>
 
 <body>
-  <!-- 커스텀 커서 -->
-  <div class="cursor"          id="cursor"></div>
+  <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursor-follower"></div>
-
-  <!-- 파티클 배경 -->
   <canvas id="particle-canvas"></canvas>
 
-  <!-- ============================================================
-       네비게이션
-  ============================================================ -->
   <nav class="nav" id="nav">
     <a href="#" class="nav-logo">AI · ML</a>
     <ul class="nav-links">
@@ -1090,9 +580,6 @@
     </ul>
   </nav>
 
-  <!-- ============================================================
-       히어로 섹션
-  ============================================================ -->
   <section class="hero" id="hero">
     <p class="hero-eyebrow">AI / ML Engineer</p>
     <h1 class="hero-title">
@@ -1107,7 +594,7 @@
     </p>
     <div class="hero-actions">
       <a href="#projects" class="btn-primary">프로젝트 보기 →</a>
-      <a href="#contact"  class="btn-outline">연락하기</a>
+      <a href="#contact" class="btn-outline">연락하기</a>
     </div>
     <div class="scroll-indicator">
       <span>Scroll</span>
@@ -1115,9 +602,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       About 섹션
-  ============================================================ -->
   <section class="about" id="about">
     <div class="section-inner">
       <div class="about-grid">
@@ -1153,7 +637,6 @@
             <span class="skill-tag">Linux</span>
           </div>
         </div>
-
         <div class="stat-grid reveal delay-2">
           <div class="stat-item">
             <div class="stat-number">2,000+</div>
@@ -1180,9 +663,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       프로젝트 섹션
-  ============================================================ -->
   <section class="projects" id="projects">
     <div class="section-inner">
       <div class="section-header reveal">
@@ -1192,7 +672,6 @@
           라즈베리파이 위에서 실시간으로 동작하는 영아 수면 안전 감지 시스템
         </p>
       </div>
-
       <div class="project-featured-banner reveal">
         <div class="banner-main">
           <div class="banner-label">Embedded AI System</div>
@@ -1214,7 +693,6 @@
             <span class="project-tag green">Real-time</span>
           </div>
         </div>
-
         <div class="banner-side">
           <ul class="metric-list">
             <li class="metric-item">
@@ -1236,7 +714,6 @@
           </ul>
         </div>
       </div>
-
       <div class="pipeline-block reveal delay-2" style="margin-top:2px;">
         <span class="hl-gold">📷 Raspberry Pi Camera</span> → <span class="hl-green">MediaPipe</span> 얼굴 인식<br/>
         → 눈 영역 크롭 → <span class="hl-gold">TFLite</span> 모델 추론 (Open / Close)<br/>
@@ -1247,16 +724,12 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       경험 섹션
-  ============================================================ -->
   <section class="experience" id="experience">
     <div class="section-inner">
       <div class="section-header reveal">
         <p class="section-tag">Experience</p>
         <h2 class="section-title">프로젝트 <span class="highlight">상세 이력</span></h2>
       </div>
-
       <div class="exp-header reveal">
         <div class="exp-title-block">
           <div class="exp-title">Baby Sleep Monitor AI</div>
@@ -1264,7 +737,6 @@
         </div>
         <div class="exp-period">2025.03 — 2025.12</div>
       </div>
-
       <div class="exp-body reveal delay-1">
         <div class="exp-block">
           <span class="exp-block-icon">🧠</span>
@@ -1276,7 +748,6 @@
             직접 수집·라벨링하여 학습 데이터셋을 구축했습니다.
           </div>
         </div>
-
         <div class="exp-block">
           <span class="exp-block-icon">🔌</span>
           <div class="exp-block-title">Embedded Integration</div>
@@ -1287,7 +758,6 @@
             실시간 영상 처리 흐름에 직접 내장했습니다.
           </div>
         </div>
-
         <div class="exp-block">
           <span class="exp-block-icon">📡</span>
           <div class="exp-block-title">Sensor Fusion & Control</div>
@@ -1302,16 +772,12 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       스킬 섹션
-  ============================================================ -->
   <section class="skills" id="skills">
     <div class="section-inner">
       <div class="section-header reveal">
         <p class="section-tag">Skills</p>
         <h2 class="section-title">기술 <span class="highlight">역량</span></h2>
       </div>
-
       <div class="skills-grid">
         <div class="reveal delay-1">
           <div class="skill-group-title">Machine Learning &amp; Vision</div>
@@ -1352,7 +818,6 @@
             </div>
           </div>
         </div>
-
         <div class="reveal delay-2">
           <div class="skill-group-title">Embedded Systems &amp; IoT</div>
           <div class="skill-bar-item">
@@ -1393,8 +858,6 @@
           </div>
         </div>
       </div>
-
-      <!-- TOEIC 게이지 -->
       <div class="english-gauge reveal" style="margin-top:64px;">
         <div>
           <div class="gauge-label">TOEIC Score</div>
@@ -1429,34 +892,31 @@
           아래 링크를 통해 바로 연락하실 수 있습니다.
         </p>
 
-        <!-- ✅ 수정 지점 1: 실제 이메일 주소 적용 + subject 파라미터로 기본 제목 설정 -->
-        <!-- ✅ 수정 지점 2: 깃허브 실제 프로필 URL 연결 -->
-        <!-- ✅ 수정 지점 3: 외부 링크 전체에 rel="noopener noreferrer" 보안 속성 추가 -->
+        <!--
+          ✅ 변경 1: LinkedIn 버튼 제거
+          ✅ 변경 2: Email을 <a> → <button>으로 교체
+                     PC: 클립보드 복사 + 토스트 알림
+                     모바일: 기존 mailto: 동작 유지
+          ✅ 변경 3: GitHub rel="noopener noreferrer" 유지
+        -->
         <div class="contact-links">
-          <a
-            href="mailto:dongukkim0827@gmail.com?subject=포트폴리오%20문의"
-            class="contact-link"
-          >✉ Email</a>
+          <button id="email-btn" class="contact-link" type="button">
+            ✉ Email
+          </button>
           <a
             href="https://github.com/AISTARTER-BEGIN"
             target="_blank"
             rel="noopener noreferrer"
             class="contact-link"
           >⌥ GitHub</a>
-          <a
-            href="https://linkedin.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="contact-link"
-          >in LinkedIn</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       푸터
-  ============================================================ -->
+  <!-- 이메일 복사 완료 토스트 -->
+  <div class="toast" id="toast">✔ 이메일이 복사되었습니다</div>
+
   <footer>
     <p class="footer-copy">© 2026 — AI / ML Engineer Portfolio</p>
     <div class="footer-links">
@@ -1466,58 +926,45 @@
     </div>
   </footer>
 
-  <!-- ============================================================
-       JavaScript
-  ============================================================ -->
   <script>
     /* ============================================================
-       1. 커스텀 커서 — lerp 보간으로 부드러운 추적
+       1. 커스텀 커서
     ============================================================ */
     (function () {
       const cursor         = document.getElementById('cursor');
       const cursorFollower = document.getElementById('cursor-follower');
-
-      let mouseX = 0, mouseY = 0;
-      let followerX = 0, followerY = 0;
+      let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
 
       document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        mouseX = e.clientX; mouseY = e.clientY;
         cursor.style.left = mouseX + 'px';
         cursor.style.top  = mouseY + 'px';
       });
 
-      /* requestAnimationFrame으로 follower를 부드럽게 보간 */
-      function animateFollower() {
+      (function animateFollower() {
         followerX += (mouseX - followerX) * 0.12;
         followerY += (mouseY - followerY) * 0.12;
         cursorFollower.style.left = followerX + 'px';
         cursorFollower.style.top  = followerY + 'px';
         requestAnimationFrame(animateFollower);
-      }
-      animateFollower();
+      })();
 
-      /* 인터랙티브 요소 위에서 커서 확대 */
       document.querySelectorAll('a, button, .exp-block, .stat-item').forEach((el) => {
         el.addEventListener('mouseenter', () => {
-          cursor.style.width  = '20px';
-          cursor.style.height = '20px';
-          cursorFollower.style.width       = '60px';
-          cursorFollower.style.height      = '60px';
+          cursor.style.width  = '20px'; cursor.style.height = '20px';
+          cursorFollower.style.width  = '60px'; cursorFollower.style.height = '60px';
           cursorFollower.style.borderColor = 'rgba(200,146,42,0.8)';
         });
         el.addEventListener('mouseleave', () => {
-          cursor.style.width  = '10px';
-          cursor.style.height = '10px';
-          cursorFollower.style.width       = '40px';
-          cursorFollower.style.height      = '40px';
+          cursor.style.width  = '10px'; cursor.style.height = '10px';
+          cursorFollower.style.width  = '40px'; cursorFollower.style.height = '40px';
           cursorFollower.style.borderColor = 'rgba(200,146,42,0.5)';
         });
       });
     })();
 
     /* ============================================================
-       2. 파티클 배경 캔버스
+       2. 파티클 배경
     ============================================================ */
     (function () {
       const canvas = document.getElementById('particle-canvas');
@@ -1525,44 +972,31 @@
       const COUNT  = 120;
       const particles = [];
 
-      function resize() {
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
+      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
       resize();
       window.addEventListener('resize', resize);
 
       function createParticle() {
         return {
-          x:     Math.random() * canvas.width,
-          y:     Math.random() * canvas.height,
-          r:     Math.random() * 1.5 + 0.3,
-          alpha: Math.random() * 0.6 + 0.1,
-          dx:    (Math.random() - 0.5) * 0.4,
-          dy:   -(Math.random() * 0.3 + 0.1),
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+          r: Math.random() * 1.5 + 0.3, alpha: Math.random() * 0.6 + 0.1,
+          dx: (Math.random() - 0.5) * 0.4, dy: -(Math.random() * 0.3 + 0.1),
         };
       }
-
       for (let i = 0; i < COUNT; i++) particles.push(createParticle());
 
-      function draw() {
+      (function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach((p) => {
-          p.x += p.dx;
-          p.y += p.dy;
-          /* 화면 밖으로 나가면 하단에서 재시작 */
+          p.x += p.dx; p.y += p.dy;
           if (p.y < -5 || p.x < -5 || p.x > canvas.width + 5) {
-            Object.assign(p, createParticle());
-            p.y = canvas.height + 5;
+            Object.assign(p, createParticle()); p.y = canvas.height + 5;
           }
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(200,146,42,${p.alpha})`;
-          ctx.fill();
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200,146,42,${p.alpha})`; ctx.fill();
         });
         requestAnimationFrame(draw);
-      }
-      draw();
+      })();
     })();
 
     /* ============================================================
@@ -1576,22 +1010,18 @@
     })();
 
     /* ============================================================
-       4. Intersection Observer — 스크롤 등장 애니메이션
+       4. 스크롤 등장 애니메이션
     ============================================================ */
     (function () {
       const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-          });
-        },
+        (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
         { threshold: 0.15 }
       );
       document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
     })();
 
     /* ============================================================
-       5. 스킬 바 애니메이션 — 뷰포트 진입 시 scaleX로 채움
+       5. 스킬 바 애니메이션
     ============================================================ */
     (function () {
       const observer = new IntersectionObserver(
@@ -1599,9 +1029,8 @@
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
             entry.target.querySelectorAll('.skill-bar-fill').forEach((fill) => {
-              const targetScale = parseFloat(fill.getAttribute('data-width'));
               fill.style.transition = 'transform 1.2s cubic-bezier(0.16,1,0.3,1)';
-              fill.style.transform  = `scaleX(${targetScale})`;
+              fill.style.transform  = `scaleX(${parseFloat(fill.getAttribute('data-width'))})`;
             });
             observer.unobserve(entry.target);
           });
@@ -1613,23 +1042,69 @@
     })();
 
     /* ============================================================
-       6. TOEIC 게이지 바 애니메이션 (705 / 990 = 71.4%)
+       6. TOEIC 게이지 (705 / 990 = 71.4%)
     ============================================================ */
     (function () {
       const bar = document.getElementById('toeic-bar');
       if (!bar) return;
       const observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              bar.style.width = '71.4%';
-              observer.unobserve(bar);
-            }
+          entries.forEach((e) => {
+            if (e.isIntersecting) { bar.style.width = '71.4%'; observer.unobserve(bar); }
           });
         },
         { threshold: 0.5 }
       );
       observer.observe(bar);
+    })();
+
+    /* ============================================================
+       7. 이메일 버튼
+          - 모바일(터치 디바이스): mailto: 로 메일 앱 실행
+          - PC: 클립보드에 이메일 복사 후 토스트 알림 표시
+    ============================================================ */
+    (function () {
+      const EMAIL      = 'dongukkim0827@gmail.com';
+      const SUBJECT    = encodeURIComponent('포트폴리오 문의');
+      const btn        = document.getElementById('email-btn');
+      const toast      = document.getElementById('toast');
+      let   toastTimer = null;
+
+      /* 토스트 2.5초 표시 후 자동 숨김 */
+      function showToast() {
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+      }
+
+      /* 구형 브라우저 폴백: execCommand 복사 */
+      function legacyCopy() {
+        const ta = document.createElement('textarea');
+        ta.value = EMAIL;
+        ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+        document.body.appendChild(ta);
+        ta.select();
+        try   { document.execCommand('copy'); showToast(); }
+        catch { window.location.href = `mailto:${EMAIL}?subject=${SUBJECT}`; }
+        finally { document.body.removeChild(ta); }
+      }
+
+      btn.addEventListener('click', () => {
+        const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+        if (isMobile) {
+          /* 모바일: 기본 메일 앱 실행 */
+          window.location.href = `mailto:${EMAIL}?subject=${SUBJECT}`;
+        } else if (navigator.clipboard && window.isSecureContext) {
+          /* PC + HTTPS(또는 localhost): Clipboard API 사용 */
+          navigator.clipboard.writeText(EMAIL)
+            .then(showToast)
+            .catch(legacyCopy);
+        } else {
+          /* PC + HTTP 등 보안 컨텍스트 아닐 때: execCommand 폴백 */
+          legacyCopy();
+        }
+      });
     })();
   </script>
 </body>
