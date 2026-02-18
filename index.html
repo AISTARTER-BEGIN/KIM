@@ -401,7 +401,6 @@
                 const data = await response.json();
                 
                 // HTML의 id를 찾아 빈칸에 데이터를 채워 넣음
-                document.getElementById('sync-chinese').textContent = data.learningStatus.chinese;
                 document.getElementById('sync-toeic').textContent = data.learningStatus.toeic;
                 document.getElementById('sync-date').textContent = data.learningStatus.lastUpdate;
                 document.getElementById('sync-badge').textContent = data.badgeMessage;
