@@ -34,9 +34,7 @@
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; overflow-x: hidden; }
-
     body {
       font-family: var(--font-sans);
       background: var(--bg-void);
@@ -54,7 +52,6 @@
       transition: width 0.3s ease, height 0.3s ease;
       mix-blend-mode: difference;
     }
-
     .cursor-follower {
       position: fixed; width: 40px; height: 40px;
       border: 1px solid rgba(200,146,42,0.5); border-radius: 50%;
@@ -75,13 +72,11 @@
       display: flex; align-items: center; justify-content: space-between;
       transition: background 0.5s ease, padding 0.3s ease;
     }
-
     .nav.scrolled {
       background: rgba(2,2,2,0.85);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       padding: 14px 5%; border-bottom: 1px solid var(--border-subtle);
     }
-
     .nav-logo {
       font-size: 13px; font-weight: 600; letter-spacing: 0.3em;
       text-transform: uppercase; color: var(--accent-gold);
@@ -95,7 +90,6 @@
     .nav-logo:hover::after { width: 100%; }
 
     .nav-links { display: flex; gap: 40px; list-style: none; }
-
     .nav-links a {
       font-size: 12px; font-weight: 500; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--text-secondary);
@@ -124,8 +118,7 @@
       pointer-events: none; z-index: -1;
     }
     .hero::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 200px;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
       background: linear-gradient(to bottom, transparent, var(--bg-void));
       pointer-events: none; z-index: 2;
     }
@@ -165,7 +158,6 @@
       color: var(--text-secondary); margin: 0 auto 48px;
       opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
     }
-
     .hero-actions {
       display: flex; gap: 16px; align-items: center;
       justify-content: center; flex-wrap: wrap;
@@ -193,9 +185,7 @@
     }
 
     section { position: relative; z-index: 1; }
-
     .section-inner { max-width: 1200px; margin: 0 auto; padding: 120px 5%; }
-
     .section-header { margin-bottom: 70px; }
 
     .section-tag {
@@ -204,19 +194,20 @@
       margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
     }
     .section-tag::before {
-      content: ''; display: block; width: 20px; height: 1px;
-      background: var(--accent-gold);
+      content: ''; display: block; width: 20px; height: 1px; background: var(--accent-gold);
     }
 
+    /* ============================================================
+       PC 기본 section-title (clamp 최솟값 24px로 설정)
+    ============================================================ */
     .section-title {
-      font-size: clamp(24px, 4vw, 52px); font-weight: 750;
+      font-size: clamp(24px, 4vw, 52px); font-weight: 800;
       letter-spacing: -0.02em; line-height: 1.1; color: var(--text-primary);
     }
     .section-title .highlight {
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-
     .section-subtitle {
       margin-top: 16px; font-size: 16px; font-weight: 300;
       color: var(--text-secondary); max-width: 500px; line-height: 1.8;
@@ -247,15 +238,10 @@
       border: 1px solid var(--border-subtle); cursor: none;
       transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     }
-    .btn-outline:hover {
-      border-color: var(--accent-gold); color: var(--accent-gold);
-      transform: translateY(-2px);
-    }
+    .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); transform: translateY(-2px); }
 
     .about { background: var(--bg-deep); }
-
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-
     .about-text p {
       font-size: 15px; font-weight: 300; line-height: 1.9;
       color: var(--text-secondary); margin-bottom: 20px;
@@ -263,17 +249,13 @@
     .about-text p strong { color: var(--text-primary); font-weight: 600; }
 
     .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
-
     .skill-tag {
       padding: 7px 16px; font-size: 11px; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold);
       background: rgba(200,146,42,0.08); border: 1px solid rgba(200,146,42,0.2);
       transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     }
-    .skill-tag:hover {
-      background: rgba(200,146,42,0.15); border-color: var(--accent-gold);
-      transform: translateY(-2px);
-    }
+    .skill-tag:hover { background: rgba(200,146,42,0.15); border-color: var(--accent-gold); transform: translateY(-2px); }
 
     .stat-grid {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -291,25 +273,30 @@
     .stat-item:hover { background: var(--bg-elevated); }
     .stat-item:hover::before { height: 100%; }
 
+    /* ============================================================
+       PC 기본 stat-number — 크게 표시
+       모바일 전용 값은 아래 @media (max-width: 768px) 안에서만 정의
+    ============================================================ */
     .stat-number {
-      font-size: 60px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
+      font-size: 48px;                        /* PC에서 표시될 크기 */
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text; margin-bottom: 8px;
     }
     .stat-label {
-      font-size: 15px; font-weight: 500; letter-spacing: 0.1em;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--text-muted);
     }
-    .stat-desc { font-size: 15px; color: var(--text-secondary); margin-top: 6px; font-weight: 300; }
+    .stat-desc { font-size: 13px; color: var(--text-secondary); margin-top: 6px; font-weight: 300; }
 
     .projects { background: var(--bg-void); }
-
     .project-featured-banner {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 2px; margin-bottom: 2px; background: var(--border-subtle);
     }
-
     .banner-main {
       background: var(--bg-surface); padding: 56px 48px;
       position: relative; overflow: hidden;
@@ -318,41 +305,28 @@
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber), transparent);
     }
-
     .banner-label {
       font-size: 10px; font-weight: 700; letter-spacing: 0.35em;
       text-transform: uppercase; color: var(--accent-gold);
       margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
     }
-    .banner-label::before {
-      content: ''; display: block; width: 16px; height: 1px;
-      background: var(--accent-gold);
-    }
-
+    .banner-label::before { content: ''; display: block; width: 16px; height: 1px; background: var(--accent-gold); }
     .banner-title {
       font-size: clamp(26px, 3vw, 38px); font-weight: 800;
       letter-spacing: -0.02em; line-height: 1.15;
       color: var(--text-primary); margin-bottom: 20px;
     }
-
-    .banner-desc {
-      font-size: 14px; font-weight: 300; color: var(--text-secondary);
-      line-height: 1.85; max-width: 460px;
-    }
-
+    .banner-desc { font-size: 14px; font-weight: 300; color: var(--text-secondary); line-height: 1.85; max-width: 460px; }
     .banner-side {
       background: var(--bg-surface); padding: 40px 36px;
       display: flex; flex-direction: column; justify-content: center; gap: 20px;
     }
-
     .metric-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-
     .metric-item {
       display: flex; align-items: baseline; gap: 12px;
       padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);
     }
     .metric-item:last-child { border-bottom: none; padding-bottom: 0; }
-
     .metric-value {
       font-size: 28px; font-weight: 900; letter-spacing: -0.02em;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
@@ -377,20 +351,15 @@
     .pipeline-block .hl-green { color: var(--accent-green); }
 
     .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-
     .project-tag {
       font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; padding: 5px 12px;
       background: rgba(200,146,42,0.1); color: var(--accent-gold);
       border: 1px solid rgba(200,146,42,0.2);
     }
-    .project-tag.green {
-      background: rgba(26,154,92,0.1); color: #1a9a5c;
-      border-color: rgba(26,154,92,0.2);
-    }
+    .project-tag.green { background: rgba(26,154,92,0.1); color: #1a9a5c; border-color: rgba(26,154,92,0.2); }
 
     .experience { background: var(--bg-deep); }
-
     .exp-header {
       display: flex; align-items: flex-start; justify-content: space-between;
       gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border-subtle);
@@ -409,11 +378,7 @@
       letter-spacing: -0.02em; line-height: 1.1; color: var(--text-primary); margin-bottom: 10px;
     }
     .exp-subtitle { font-size: 14px; font-weight: 400; color: var(--text-muted); letter-spacing: 0.08em; }
-
-    .exp-body {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 2px; background: var(--border-subtle);
-    }
+    .exp-body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border-subtle); }
     .exp-block {
       background: var(--bg-surface); padding: 36px 32px;
       position: relative; overflow: hidden; transition: background 0.4s ease;
@@ -435,18 +400,14 @@
     .exp-block-desc strong { color: var(--text-primary); font-weight: 600; }
 
     .skills { background: var(--bg-void); }
-
     .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 80px; }
-
     .skill-group-title {
       font-size: 11px; font-weight: 700; letter-spacing: 0.3em;
       text-transform: uppercase; color: var(--accent-gold);
       margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);
     }
     .skill-bar-item { margin-bottom: 20px; }
-    .skill-bar-header {
-      display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;
-    }
+    .skill-bar-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
     .skill-bar-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
     .skill-bar-pct { font-size: 11px; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.05em; }
     .skill-bar-track { height: 2px; background: var(--bg-elevated); position: relative; overflow: hidden; }
@@ -467,7 +428,7 @@
       text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
     }
     .gauge-score {
-      font-size: 64px; font-weight: 900; letter-spacing: -0.04em; line-height: 1;
+      font-size: 72px; font-weight: 900; letter-spacing: -0.04em; line-height: 1;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text; margin-bottom: 4px;
@@ -493,8 +454,6 @@
       line-height: 1.8; margin-bottom: 48px;
     }
     .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-    /* contact-link — <a>와 <button> 모두 동일한 스타일 적용 */
     .contact-link {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 14px 28px; background: transparent;
@@ -509,7 +468,6 @@
       background: rgba(200,146,42,0.06); transform: translateY(-2px);
     }
 
-    /* ✅ 이메일 복사 토스트 알림 */
     .toast {
       position: fixed; bottom: 40px; left: 50%;
       transform: translateX(-50%) translateY(20px);
@@ -547,34 +505,37 @@
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
+    /* ============================================================
+       태블릿 반응형 (900px 이하)
+    ============================================================ */
     @media (max-width: 900px) {
       .project-featured-banner { grid-template-columns: 1fr; }
       .exp-body { grid-template-columns: 1fr; }
       .about-grid, .skills-grid { grid-template-columns: 1fr; gap: 40px; }
       .exp-header { flex-direction: column; gap: 16px; }
     }
+
+    /* ============================================================
+       모바일 반응형 (768px 이하)
+       — 이 블록 안에서만 모바일 전용 값을 덮어씁니다
+       — 이 블록 밖에는 절대 모바일용 규칙을 쓰지 않습니다
+    ============================================================ */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
       .english-gauge { grid-template-columns: 1fr; padding: 32px 24px; }
       footer { flex-direction: column; gap: 16px; text-align: center; }
       body { cursor: auto; }
       .cursor, .cursor-follower { display: none; }
+
+      /* section-title: 모바일에서만 작게 */
+      .section-title { font-size: clamp(22px, 6vw, 36px); }
+
+      /* stat 카드: 패딩 줄이고 숫자 크기 축소 */
+      .stat-item   { padding: 20px 14px; }
+      .stat-number { font-size: 24px; letter-spacing: -0.02em; }
+      .stat-label  { font-size: 10px; }
+      .stat-desc   { font-size: 11px; }
     }
-    .section-title { font-size: clamp(22px, 6vw, 36px); }
-  .section-title br { display: none; }   /* 줄바꿈 제거해 한 줄로 합치고 싶을 때 */
-}
-.stat-number { font-size: 24px; }
-/* 통계 카드 패딩 축소 — 500번째 줄 stat-item의 padding: 32px 28px 이 너무 큼 */
-.stat-item { padding: 20px 14px; }
-
-/* 통계 숫자 크기 + 자간 축소 — 518번째 줄 stat-number */
-.stat-number { font-size: 22px; letter-spacing: -0.02em; }
-
-/* 설명 텍스트도 약간 축소 — 538번째 줄 stat-desc */
-.stat-desc { font-size: 11px; }
-
-
   </style>
 </head>
 
@@ -890,9 +851,6 @@
     </div>
   </section>
 
-  <!-- ============================================================
-       연락처 섹션
-  ============================================================ -->
   <section class="contact" id="contact">
     <div class="contact-inner">
       <div class="reveal">
@@ -905,30 +863,14 @@
           협업이나 프로젝트 문의는 언제든 환영합니다.<br/>
           아래 링크를 통해 바로 연락하실 수 있습니다.
         </p>
-
-        <!--
-          ✅ 변경 1: LinkedIn 버튼 제거
-          ✅ 변경 2: Email을 <a> → <button>으로 교체
-                     PC: 클립보드 복사 + 토스트 알림
-                     모바일: 기존 mailto: 동작 유지
-          ✅ 변경 3: GitHub rel="noopener noreferrer" 유지
-        -->
         <div class="contact-links">
-          <button id="email-btn" class="contact-link" type="button">
-            ✉ Email
-          </button>
-          <a
-            href="https://github.com/AISTARTER-BEGIN"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="contact-link"
-          >⌥ GitHub</a>
+          <button id="email-btn" class="contact-link" type="button">✉ Email</button>
+          <a href="https://github.com/AISTARTER-BEGIN" target="_blank" rel="noopener noreferrer" class="contact-link">⌥ GitHub</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 이메일 복사 완료 토스트 -->
   <div class="toast" id="toast">✔ 이메일이 복사되었습니다</div>
 
   <footer>
@@ -1084,14 +1026,12 @@
       const toast      = document.getElementById('toast');
       let   toastTimer = null;
 
-      /* 토스트 2.5초 표시 후 자동 숨김 */
       function showToast() {
         toast.classList.add('show');
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
       }
 
-      /* 구형 브라우저 폴백: execCommand 복사 */
       function legacyCopy() {
         const ta = document.createElement('textarea');
         ta.value = EMAIL;
@@ -1105,17 +1045,11 @@
 
       btn.addEventListener('click', () => {
         const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
         if (isMobile) {
-          /* 모바일: 기본 메일 앱 실행 */
           window.location.href = `mailto:${EMAIL}?subject=${SUBJECT}`;
         } else if (navigator.clipboard && window.isSecureContext) {
-          /* PC + HTTPS(또는 localhost): Clipboard API 사용 */
-          navigator.clipboard.writeText(EMAIL)
-            .then(showToast)
-            .catch(legacyCopy);
+          navigator.clipboard.writeText(EMAIL).then(showToast).catch(legacyCopy);
         } else {
-          /* PC + HTTP 등 보안 컨텍스트 아닐 때: execCommand 폴백 */
           legacyCopy();
         }
       });
