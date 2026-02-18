@@ -409,6 +409,7 @@
             font-size: 0.9rem;
             transition: all var(--transition-base);
             box-shadow: 0 4px 15px rgba(0, 102, 255, 0.1);
+            position: relative;
         }
 
         .contact-link:hover {
@@ -418,11 +419,40 @@
             box-shadow: 0 8px 25px rgba(0, 102, 255, 0.3);
         }
 
+        .contact-link .copy-hint {
+            font-size: 0.7em;
+            opacity: 0.7;
+            margin-left: 4px;
+        }
+
         .contact-links {
             display: flex;
             flex-wrap: wrap;
             gap: var(--space-md);
             margin-top: var(--space-lg);
+        }
+
+        /* 복사 완료 토스트 알림 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--accent-success);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(0, 200, 83, 0.4);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         .project-section {
@@ -662,6 +692,9 @@
         <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="2"/>
     </svg>
 
+    <!-- 복사 완료 토스트 알림 -->
+    <div class="toast" id="copyToast">📋 이메일 주소가 복사되었습니다!</div>
+
     <section class="hero-section">
         <h1 class="hero-title">
             <span class="line"><span>AI/ML</span></span>
@@ -852,10 +885,16 @@
             </p>
             
             <div class="contact-links">
-                <a href="mailto:dongukkim0827@gmail.com" class="contact-link">
+                <a href="mailto:dongukkim0827@gmail.com" 
+                   onclick="copyEmail(event)" 
+                   class="contact-link">
                     📧 dongukkim0827@gmail.com
+                    <span class="copy-hint">(클릭하여 복사)</span>
                 </a>
-                <a href="https://github.com/AISTARTER-BEGIN" target="_blank" rel="noopener noreferrer" class="contact-link">
+                <a href="https://github.com/AISTARTER-BEGIN" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="contact-link">
                     💼 GitHub: AISTARTER-BEGIN
                 </a>
             </div>
@@ -867,6 +906,57 @@
     </footer>
 
     <script>
+        /* 이메일 복사 기능 */
+        function copyEmail(e) {
+            // 모바일은 기본 동작(메일 앱 열기) 허용
+            if (window.innerWidth <= 768) {
+                return;
+            }
+            
+            // 데스크톱에서는 복사 기능 실행
+            e.preventDefault();
+            
+            const email = 'dongukkim0827@gmail.com';
+            
+            // 클립보드에 복사
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(email).then(() => {
+                    showToast();
+                }).catch(() => {
+                    // 복사 실패 시 기본 메일 앱 열기
+                    window.location.href = 'mailto:' + email;
+                });
+            } else {
+                // 구형 브라우저 대응
+                const textArea = document.createElement('textarea');
+                textArea.value = email;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (err) {
+                    window.location.href = 'mailto:' + email;
+                }
+                
+                document.body.removeChild(textArea);
+            }
+        }
+
+        /* 토스트 알림 표시 */
+        function showToast() {
+            const toast = document.getElementById('copyToast');
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        /* 숫자 카운터 애니메이션 */
         function animateCounter(element, target, duration = 2000) {
             const start = 0;
             const increment = target / (duration / 16);
