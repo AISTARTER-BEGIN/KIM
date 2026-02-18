@@ -1,421 +1,1636 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI/ML Engineer DongUk KIM - Computer Vision & Embedded Systems Specialist">
-    <title>DongUk KIM | AI/ML Engineer Portfolio</title>
-    <style>
-        :root {
-            /* 차가운 엔지니어링 베이스 */
-            --bg-primary: #FAFAFC;
-            --bg-secondary: #FFFFFF;
-            
-            /* 블루프린트(설계도) 라인 색상 */
-            --blueprint-grid: rgba(0, 102, 255, 0.05);
-            --border-light: rgba(0, 50, 150, 0.1);
-            --border-medium: rgba(0, 50, 150, 0.3);
-            --border-strong: rgba(0, 50, 150, 0.6);
-            
-            /* 강렬한 액센트 색상 */
-            --accent-primary: #0044CC;
-            --accent-secondary: #00D4FF;
-            --accent-warm: #E63946;
-            --accent-success: #00A86B;
-            
-            /* 텍스트 */
-            --text-primary: #11151C;
-            --text-secondary: #4A5568;
-            --text-muted: #A0AEC0;
-            
-            /* 폰트: 시스템 기본 폰트와 모노스페이스(타자기) 폰트 혼용 */
-            --font-main: 'Arial', sans-serif;
-            --font-mono: 'Courier New', 'Roboto Mono', monospace;
-            
-            --space-xs: 8px;
-            --space-sm: 16px;
-            --space-md: 24px;
-            --space-lg: 40px;
-            --space-xl: 60px;
-            --space-2xl: 100px;
-            --transition-base: 0.2s linear;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – AI / ML Engineer</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
 
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: var(--font-main);
-            font-size: 15px;
-            line-height: 1.6;
-            overflow-x: hidden;
-            /* 전역 블루프린트 그리드 배경 */
-            background-image: 
-                linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
-                linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
+  <style>
+    /* ============================================================
+       CSS 커스텀 변수 — 다크 시네마틱 컬러 팔레트
+    ============================================================ */
+    :root {
+      --bg-void:       #020202;
+      --bg-deep:       #070a0f;
+      --bg-surface:    #0d1117;
+      --bg-elevated:   #131920;
 
-        .container {
-            max-width: 1050px;
-            margin: 0 auto;
-            padding: var(--space-xl) var(--space-md);
-        }
+      --accent-gold:   #c8922a;
+      --accent-amber:  #e8a83a;
+      --accent-glow:   #f0b84a;
+      --accent-green:  #1a9a5c;
 
-        /* --- 글로벌 패널 스타일 (Schematic Panel) --- */
-        .schematic-panel {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-medium);
-            padding: var(--space-lg);
-            margin-bottom: var(--space-md);
-            position: relative;
-            box-shadow: 4px 4px 0px rgba(0, 68, 204, 0.05); /* 각진 그림자 */
-            transition: all var(--transition-base);
-        }
+      --text-primary:  #f0ece4;
+      --text-secondary:#9a9080;
+      --text-muted:    #4a4540;
+      --text-accent:   #c8922a;
 
-        .schematic-panel:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 6px 6px 0px rgba(0, 68, 204, 0.15);
-            transform: translate(-2px, -2px);
-        }
+      --border-subtle: rgba(200,146,42,0.15);
+      --border-glow:   rgba(200,146,42,0.4);
 
-        /* 패널 모서리 십자선 (Crosshairs) */
-        .schematic-panel::before, 
-        .schematic-panel::after {
-            content: ''; position: absolute; width: 10px; height: 10px;
-            border: 1px solid var(--accent-primary);
-        }
-        .schematic-panel::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-        .schematic-panel::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+      --font-sans:     'Inter', 'Noto Sans KR', sans-serif;
 
-        /* 타이틀 스타일 */
-        h2 {
-            font-family: var(--font-mono);
-            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-            font-weight: 700;
-            margin-bottom: var(--space-lg);
-            color: var(--accent-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px dashed var(--border-medium);
-            padding-bottom: var(--space-sm);
-        }
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        h2::before { content: '>[SYS]_ '; color: var(--accent-secondary); }
+    /* ============================================================
+       전역 리셋 및 기본 설정
+    ============================================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* 모노스페이스 강조 텍스트 */
-        .mono-text { font-family: var(--font-mono); }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
 
-        /* --- 개별 섹션 스타일 --- */
-        .hero-section {
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: var(--space-lg) var(--space-md);
-            position: relative;
-            border-bottom: 2px solid var(--accent-primary);
-        }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-void);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-        .hero-title {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -0.05em;
-            text-transform: uppercase;
-            margin-bottom: var(--space-md);
-            color: var(--text-primary);
-        }
+    /* ============================================================
+       커스텀 커서
+    ============================================================ */
+    .cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease;
+      mix-blend-mode: difference;
+    }
 
-        .hero-title .accent { color: var(--accent-primary); }
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(200,146,42,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease, border-color 0.3s ease;
+    }
 
-        .hero-subtitle {
-            font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-            color: var(--text-secondary);
-            max-width: 650px;
-            border-left: 3px solid var(--accent-secondary);
-            padding-left: 15px;
-        }
+    /* ============================================================
+       파티클 캔버스
+    ============================================================ */
+    #particle-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: var(--space-md);
-            margin: var(--space-xl) 0;
-        }
+    /* ============================================================
+       네비게이션
+    ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 20px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.5s ease, padding 0.3s ease;
+    }
 
-        .stat-item {
-            border: 1px solid var(--border-medium);
-            padding: var(--space-md);
-            background: var(--bg-secondary);
-            text-align: left;
-        }
+    .nav.scrolled {
+      background: rgba(2,2,2,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 14px 5%;
+      border-bottom: 1px solid var(--border-subtle);
+    }
 
-        .stat-number {
-            font-family: var(--font-mono);
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-primary);
-            display: block;
-            border-bottom: 1px solid var(--border-light);
-            margin-bottom: 8px;
-        }
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      text-decoration: none;
+      position: relative;
+    }
 
-        .stat-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-primary);
-        }
+    .nav-logo::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent-gold);
+      transition: width 0.4s var(--ease-out-expo);
+    }
+    .nav-logo:hover::after { width: 100%; }
 
-        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; }
-        
-        .tag {
-            font-family: var(--font-mono);
-            background: transparent;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid var(--border-strong);
-            color: var(--text-primary);
-            text-transform: uppercase;
-        }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
 
-        .tag:hover {
-            background: var(--accent-primary);
-            color: white;
-            border-color: var(--accent-primary);
-        }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+    }
 
-        .timeline {
-            border-left: 2px solid var(--border-strong);
-            padding-left: var(--space-md);
-            margin-left: 10px;
-        }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent-gold);
+      transition: width 0.3s var(--ease-out-expo);
+    }
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: var(--space-md);
-        }
+    .nav-links a:hover { color: var(--accent-gold); }
+    .nav-links a:hover::after { width: 100%; }
 
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -33px;
-            top: 5px;
-            width: 10px; height: 10px;
-            background: var(--bg-secondary);
-            border: 2px solid var(--accent-primary);
-        }
+    /* ============================================================
+       히어로 섹션
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 5%;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-        .timeline-title { font-weight: 700; color: var(--text-primary); margin-bottom: 5px; }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,146,42,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(26,154,92,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 50% at 10% 60%, rgba(200,146,42,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        .code-block {
-            background: #11151C; /* 다크 터미널 느낌 */
-            padding: var(--space-md);
-            border: 1px solid var(--border-medium);
-            border-left: 4px solid var(--accent-primary);
-            overflow-x: auto;
-            color: #A0AEC0;
-        }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--bg-void));
+      pointer-events: none;
+      z-index: 2;
+    }
 
-        .code-block code {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            line-height: 1.8;
-        }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s var(--ease-out-expo) 0.3s forwards;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        /* Learning Status 동기화 모니터 전용 스타일 */
-        .sync-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-md);
-            margin-top: var(--space-md);
-        }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 30px; height: 1px;
+      background: var(--accent-gold);
+      opacity: 0.6;
+    }
 
-        .sync-module {
-            border: 1px dashed var(--border-strong);
-            padding: var(--space-md);
-            background: rgba(0, 68, 204, 0.02);
-        }
+    .hero-title {
+      font-size: clamp(48px, 8vw, 110px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out-expo) 0.5s forwards;
+    }
 
-        .sync-label {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent-primary);
-            margin-bottom: 10px;
-        }
+    .hero-title .line-1 { display: block; color: var(--text-primary); }
 
-        .sync-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
+    .hero-title .line-2 {
+      display: block;
+      background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-amber) 50%, var(--accent-glow) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(200,146,42,0.3));
+    }
 
-        .sync-footer {
-            margin-top: var(--space-md);
-            padding-top: var(--space-sm);
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-        }
+    .hero-title .line-3 {
+      display: block;
+      color: var(--text-secondary);
+      font-weight: 300;
+      font-size: 0.5em;
+      letter-spacing: 0.05em;
+      margin-top: 16px;
+    }
 
-        .status-indicator {
-            width: 8px; height: 8px;
-            background: var(--accent-success);
-            border-radius: 50%;
-            animation: blink 1.5s infinite;
-        }
+    .hero-desc {
+      max-width: 560px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin: 0 auto 48px;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
+    }
 
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out-expo) 0.9s forwards;
+    }
 
-        footer {
-            padding: var(--space-lg) var(--space-md);
-            border-top: 1px dashed var(--border-strong);
-            text-align: center;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-    </style>
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out-expo) 1.4s forwards;
+      z-index: 10;
+    }
+
+    .scroll-indicator span {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--accent-gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.1); }
+    }
+
+    /* ============================================================
+       공통 섹션 레이아웃
+    ============================================================ */
+    section { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 5%;
+    }
+
+    .section-header { margin-bottom: 70px; }
+
+    .section-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1px;
+      background: var(--accent-gold);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+
+    .section-title .highlight {
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-subtitle {
+      margin-top: 16px;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 500px;
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       버튼 스타일
+    ============================================================ */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--accent-gold);
+      color: var(--bg-void);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(200,146,42,0.3);
+    }
+    .btn-primary:hover::before { left: 100%; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 32px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--border-subtle);
+      cursor: none;
+      transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       About 섹션
+    ============================================================ */
+    .about { background: var(--bg-deep); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-text p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .about-text p strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .skill-tag {
+      padding: 7px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      background: rgba(200,146,42,0.08);
+      border: 1px solid rgba(200,146,42,0.2);
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .skill-tag:hover {
+      background: rgba(200,146,42,0.15);
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border-subtle);
+    }
+
+    .stat-item {
+      background: var(--bg-surface);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+
+    .stat-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent-gold);
+      transition: height 0.4s var(--ease-out-expo);
+    }
+
+    .stat-item:hover { background: var(--bg-elevated); }
+    .stat-item:hover::before { height: 100%; }
+
+    .stat-number {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .stat-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      font-weight: 300;
+    }
+
+    /* ============================================================
+       프로젝트 섹션 — Baby Sleep Monitor 단독
+    ============================================================ */
+    .projects { background: var(--bg-void); }
+
+    .project-featured-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 2px;
+      background: var(--border-subtle);
+    }
+
+    .banner-main {
+      background: var(--bg-surface);
+      padding: 56px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .banner-main::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber), transparent);
+    }
+
+    .banner-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .banner-label::before {
+      content: '';
+      display: block;
+      width: 16px; height: 1px;
+      background: var(--accent-gold);
+    }
+
+    .banner-title {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .banner-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      max-width: 460px;
+    }
+
+    .banner-side {
+      background: var(--bg-surface);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .metric-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .metric-item {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .metric-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .metric-value {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      flex-shrink: 0;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .pipeline-block {
+      background: var(--bg-void);
+      border: 1px solid var(--border-subtle);
+      padding: 24px 28px;
+      font-size: 12px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: var(--text-secondary);
+      line-height: 2.1;
+      position: relative;
+    }
+
+    .pipeline-block::before {
+      content: 'SYSTEM PIPELINE';
+      position: absolute;
+      top: -1px; right: 16px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--accent-gold);
+      background: var(--bg-void);
+      padding: 2px 8px;
+      border: 1px solid var(--border-subtle);
+      transform: translateY(-50%);
+    }
+
+    .pipeline-block .hl-gold  { color: var(--accent-amber); }
+    .pipeline-block .hl-green { color: var(--accent-green); }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .project-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      background: rgba(200,146,42,0.1);
+      color: var(--accent-gold);
+      border: 1px solid rgba(200,146,42,0.2);
+    }
+
+    .project-tag.green {
+      background: rgba(26,154,92,0.1);
+      color: #1a9a5c;
+      border-color: rgba(26,154,92,0.2);
+    }
+
+    /* ============================================================
+       경험 / 단일 프로젝트 블록
+    ============================================================ */
+    .experience { background: var(--bg-deep); }
+
+    .exp-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+
+    .exp-period {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      padding: 8px 18px;
+      border: 1px solid var(--border-glow);
+      background: rgba(200,146,42,0.06);
+      white-space: nowrap;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    .exp-title-block { flex: 1; }
+
+    .exp-title {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .exp-subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .exp-body {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border-subtle);
+    }
+
+    .exp-block {
+      background: var(--bg-surface);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    .exp-block::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-gold), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease-out-expo);
+    }
+
+    .exp-block:hover { background: var(--bg-elevated); }
+    .exp-block:hover::after { transform: scaleX(1); }
+
+    .exp-block-icon {
+      font-size: 22px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .exp-block-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .exp-block-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.85;
+    }
+
+    .exp-block-desc strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       스킬 바 섹션
+    ============================================================ */
+    .skills { background: var(--bg-void); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px 80px;
+    }
+
+    .skill-group-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .skill-bar-item { margin-bottom: 20px; }
+
+    .skill-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .skill-bar-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .skill-bar-pct {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: 0.05em;
+    }
+
+    .skill-bar-track {
+      height: 2px;
+      background: var(--bg-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber));
+      box-shadow: 0 0 10px rgba(200,146,42,0.5);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    /* TOEIC 게이지 */
+    .english-gauge {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .gauge-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .gauge-score {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+
+    .gauge-target {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .gauge-bar-wrap {
+      background: var(--bg-elevated);
+      height: 4px;
+      margin-top: 24px;
+    }
+
+    .gauge-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-amber));
+      box-shadow: 0 0 12px rgba(200,146,42,0.6);
+      width: 0;
+      transition: width 1.5s var(--ease-out-expo) 0.3s;
+    }
+
+    .gauge-desc {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================================
+       연락처 섹션
+    ============================================================ */
+    .contact { background: var(--bg-void); }
+
+    .contact-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 120px 5%;
+    }
+
+    .contact-title {
+      font-size: clamp(40px, 6vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .contact-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: rgba(200,146,42,0.06);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       푸터
+    ============================================================ */
+    footer {
+      padding: 40px 5%;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-void);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--accent-gold); }
+
+    /* ============================================================
+       스크롤 등장 애니메이션
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================================
+       키프레임
+    ============================================================ */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       모바일 반응형
+    ============================================================ */
+    @media (max-width: 900px) {
+      .project-featured-banner { grid-template-columns: 1fr; }
+      .exp-body { grid-template-columns: 1fr; }
+      .about-grid,
+      .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+      .exp-header { flex-direction: column; gap: 16px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .english-gauge { grid-template-columns: 1fr; padding: 32px 24px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      body { cursor: auto; }
+      .cursor, .cursor-follower { display: none; }
+    }
+  </style>
 </head>
+
 <body>
+  <!-- 커스텀 커서 -->
+  <div class="cursor"          id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
 
-    <section class="hero-section">
-        <h1 class="hero-title">
-            <span class="line">AI/ML</span>
-            <span class="line">ENGINEER</span>
-            <span class="line accent">DONGUK KIM</span>
-        </h1>
-        <p class="hero-subtitle">
-            Computer Vision & Embedded Systems 전문가로, 실생활 문제를 머신러닝과 IoT 기술로 해결합니다.<br>
-            MobileNetV2, CNN/SVM 통합 학습, 라즈베리파이 최적화에 강점을 가지고 있습니다.
-        </p>
-    </section>
+  <!-- 파티클 배경 -->
+  <canvas id="particle-canvas"></canvas>
 
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span class="stat-number">1700</span>
-                <span class="stat-label">Training Images</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">8%</span>
-                <span class="stat-label">Accuracy Boost</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">4s</span>
-                <span class="stat-label">Detect Speed</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Real-time</span>
-            </div>
+  <!-- ============================================================
+       네비게이션
+  ============================================================ -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">AI · ML</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+       히어로 섹션
+  ============================================================ -->
+  <section class="hero" id="hero">
+    <p class="hero-eyebrow">AI / ML Engineer</p>
+    <h1 class="hero-title">
+      <span class="line-1">Building Intelligent</span>
+      <span class="line-2">Systems</span>
+      <span class="line-3">Computer Vision · Embedded AI · Edge Inference</span>
+    </h1>
+    <p class="hero-desc">
+      머신러닝 모델을 실제 하드웨어 위에서 실시간으로 구동하는 AI/ML 엔지니어입니다.
+      MobileNetV2, TFLite, MediaPipe를 라즈베리파이 환경에 최적화하여
+      현실 문제를 해결하는 임베디드 AI 시스템을 설계·구현합니다.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">프로젝트 보기 →</a>
+      <a href="#contact"  class="btn-outline">연락하기</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       About 섹션
+  ============================================================ -->
+  <section class="about" id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <div class="section-header">
+            <p class="section-tag">About</p>
+            <h2 class="section-title">
+              엣지에서 실행되는<br/>
+              <span class="highlight">AI를 만듭니다</span>
+            </h2>
+          </div>
+          <p>
+            <strong>AI/ML Engineering</strong>의 핵심은 모델을 만드는 것이 아니라
+            그 모델이 현실에서 안정적으로 동작하게 만드는 것입니다.
+            클라우드가 아닌 <strong>엣지 디바이스</strong> 위에서 AI가 실시간으로 판단하고
+            액추에이터를 제어하는 완전한 파이프라인을 설계합니다.
+          </p>
+          <p>
+            라즈베리파이의 제한된 연산 자원 안에서 MobileNetV2와 TFLite를 최적화하고,
+            MediaPipe·OpenCV·센서 데이터를 하나의 추론 파이프라인으로 통합하는 것이
+            저의 핵심 강점입니다.
+          </p>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">TFLite</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">OpenCV</span>
+            <span class="skill-tag">MediaPipe</span>
+            <span class="skill-tag">Raspberry Pi</span>
+            <span class="skill-tag">C / C++</span>
+            <span class="skill-tag">MQTT</span>
+            <span class="skill-tag">Linux</span>
+          </div>
         </div>
 
-        <section class="schematic-panel">
-            <h2>Core Stack</h2>
-            <div class="tech-tags">
-                <span class="tag">Python</span>
-                <span class="tag">TensorFlow / TFLite</span>
-                <span class="tag">MobileNetV2</span>
-                <span class="tag">CNN + SVM</span>
-                <span class="tag">MediaPipe</span>
-                <span class="tag">OpenCV</span>
-                <span class="tag">Raspberry Pi</span>
-                <span class="tag">IoT Sensors</span>
-            </div>
-        </section>
-
-        <section class="schematic-panel">
-            <h2>Project: SIDS Prevention</h2>
-            <p style="margin-bottom: var(--space-md);">
-                라즈베리파이와 컴퓨터 비전 기술을 활용하여 아기의 수면 상태를 실시간으로 모니터링하고, 위험 상황을 자동 감지하는 시스템.
-            </p>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-title">1. 데이터 수집 및 전처리</div>
-                    <div class="timeline-desc">아기 얼굴 사진 1700장 수집, MobileNetV2로 자동 분할.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-title">2. 학습 방식 혁신</div>
-                    <div class="timeline-desc">CNN과 SVM을 결합하여 검증률 8% 상승.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-title">3. 임베디드 최적화</div>
-                    <div class="timeline-desc">TFLite 양자화로 라즈베리파이 환경 실시간 추론 구현.</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="schematic-panel">
-            <h2>Architecture</h2>
-            <div class="code-block">
-                <code>
-[CAM] MediaPipe Face Detect<br>
-  ├──> Crop Eye Region<br>
-  ├──> TFLite Infer (Open/Close)<br>
-  └──> SIDS Risk Check (Gap)<br>
-         └──> IF TRUE: Trigger Alarm & Humidifier
-                </code>
-            </div>
-        </section>
-
-        <section class="schematic-panel" id="learning-status-section">
-            <h2>Learning Sync Monitor</h2>
-            <div class="sync-grid">
-                <div class="sync-module">
-                    <div class="sync-label">[LANG_MODULE] CHINESE</div>
-                    <div class="sync-value" id="sync-chinese">데이터 로딩 중...</div>
-                </div>
-                <div class="sync-module">
-                    <div class="sync-label">[CERT_MODULE] TOEIC</div>
-                    <div class="sync-value" id="sync-toeic">데이터 로딩 중...</div>
-                </div>
-            </div>
-            <div class="sync-footer">
-                <div class="status-indicator"></div>
-                <span style="color: var(--accent-success);" id="sync-badge">SYSTEM CONNECTING...</span>
-                <span style="margin-left: auto; color: var(--text-muted);">LAST_SYNC: <span id="sync-date">...</span></span>
-            </div>
-        </section>
+        <div class="stat-grid reveal delay-2">
+          <div class="stat-item">
+            <div class="stat-number">2,000+</div>
+            <div class="stat-label">Training Images</div>
+            <div class="stat-desc">직접 구축한 아기 얼굴 데이터셋</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">↑15%</div>
+            <div class="stat-label">Accuracy Boost</div>
+            <div class="stat-desc">CNN+SVM 하이브리드 개선</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">&lt;2s</div>
+            <div class="stat-label">Inference Latency</div>
+            <div class="stat-desc">라즈베리파이 실시간 추론</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">9mo</div>
+            <div class="stat-label">Project Duration</div>
+            <div class="stat-desc">2025.03 — 2025.12</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <footer>
-        <p>SYSTEM INITIATED. © 2026 DongUk KIM. ENGINEERED ARCHITECTURE.</p>
-    </footer>
+  <!-- ============================================================
+       프로젝트 섹션
+  ============================================================ -->
+  <section class="projects" id="projects">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag">Featured Project</p>
+        <h2 class="section-title">Baby Sleep <span class="highlight">Monitor AI</span></h2>
+        <p class="section-subtitle">
+          라즈베리파이 위에서 실시간으로 동작하는 영아 수면 안전 감지 시스템
+        </p>
+      </div>
 
-    <script>
-        // ⭐️ 핵심 로직: data.json을 비동기로 불러와서 화면에 주입합니다.
-        async function syncData() {
-            try {
-                // data.json 파일을 불러옴
-                const response = await fetch('data.json');
-                if (!response.ok) throw new Error("JSON Fetch Failed");
-                const data = await response.json();
-                
-                // HTML의 id를 찾아 빈칸에 데이터를 채워 넣음
-                document.getElementById('sync-toeic').textContent = data.learningStatus.toeic;
-                document.getElementById('sync-date').textContent = data.learningStatus.lastUpdate;
-                document.getElementById('sync-badge').textContent = data.badgeMessage;
-                
-            } catch (error) {
-                console.error('Data Sync Error:', error);
-                document.getElementById('sync-chinese').textContent = "오프라인 모드 (data.json 읽기 실패)";
-                document.getElementById('sync-toeic').textContent = "서버 환경(Vercel 등)에서 정상 작동합니다.";
-                document.getElementById('sync-badge').textContent = "SYNC FAILED";
-                document.getElementById('sync-badge').style.color = "var(--accent-warm)";
+      <div class="project-featured-banner reveal">
+        <div class="banner-main">
+          <div class="banner-label">Embedded AI System</div>
+          <div class="banner-title">
+            영아 수면 중 위험 상황을<br/>AI가 실시간으로 감지합니다
+          </div>
+          <div class="banner-desc">
+            라즈베리파이와 컴퓨터 비전 기술을 활용하여 아기의 수면 상태를 실시간으로
+            모니터링하고, SIDS(영아 돌연사 증후군) 위험 신호를 자동 감지하는
+            임베디드 AI 시스템입니다. 카메라, 센서, 액추에이터가 하나의 파이프라인으로
+            유기적으로 연결됩니다.
+          </div>
+          <div class="project-tags">
+            <span class="project-tag">Raspberry Pi</span>
+            <span class="project-tag">TFLite</span>
+            <span class="project-tag">MediaPipe</span>
+            <span class="project-tag">MobileNetV2</span>
+            <span class="project-tag green">Embedded AI</span>
+            <span class="project-tag green">Real-time</span>
+          </div>
+        </div>
+
+        <div class="banner-side">
+          <ul class="metric-list">
+            <li class="metric-item">
+              <span class="metric-value">2,000+</span>
+              <span class="metric-label">학습에 사용된<br/>아기 얼굴 이미지 수</span>
+            </li>
+            <li class="metric-item">
+              <span class="metric-value">+15%</span>
+              <span class="metric-label">CNN+SVM 통합으로<br/>달성한 정확도 향상</span>
+            </li>
+            <li class="metric-item">
+              <span class="metric-value">4s</span>
+              <span class="metric-label">눈 뜸 지속 감지 시<br/>음악 재생 트리거 임계값</span>
+            </li>
+            <li class="metric-item">
+              <span class="metric-value">&lt;2s</span>
+              <span class="metric-label">라즈베리파이에서의<br/>엔드-투-엔드 추론 지연</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pipeline-block reveal delay-2" style="margin-top:2px;">
+        <span class="hl-gold">📷 Raspberry Pi Camera</span> → <span class="hl-green">MediaPipe</span> 얼굴 인식<br/>
+        → 눈 영역 크롭 → <span class="hl-gold">TFLite</span> 모델 추론 (Open / Close)<br/>
+        → 눈 간격 체크 → <span class="hl-green">SIDS 위험 판단 로직</span><br/>
+        → 4초 이상 눈 뜸 감지 시 <span class="hl-gold">🎵 음악 재생 트리거</span><br/>
+        → <span class="hl-green">🌡️ 온습도 센서(DHT22)</span> + <span class="hl-gold">💧 초음파 가습기</span> 병렬 제어
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       경험 섹션
+  ============================================================ -->
+  <section class="experience" id="experience">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag">Experience</p>
+        <h2 class="section-title">프로젝트 <span class="highlight">상세 이력</span></h2>
+      </div>
+
+      <div class="exp-header reveal">
+        <div class="exp-title-block">
+          <div class="exp-title">Baby Sleep Monitor AI</div>
+          <div class="exp-subtitle">Embedded AI · Computer Vision · IoT Integration</div>
+        </div>
+        <div class="exp-period">2025.03 — 2025.12</div>
+      </div>
+
+      <div class="exp-body reveal delay-1">
+        <div class="exp-block">
+          <span class="exp-block-icon">🧠</span>
+          <div class="exp-block-title">Model Development</div>
+          <div class="exp-block-desc">
+            <strong>MobileNetV2</strong>를 베이스로 TFLite 경량화 모델을 설계하고,
+            <strong>CNN+SVM 하이브리드</strong> 구조를 실험하여 순수 CNN 대비
+            정확도 15% 향상을 달성했습니다. 2,000장 이상의 아기 얼굴 이미지를
+            직접 수집·라벨링하여 학습 데이터셋을 구축했습니다.
+          </div>
+        </div>
+
+        <div class="exp-block">
+          <span class="exp-block-icon">🔌</span>
+          <div class="exp-block-title">Embedded Integration</div>
+          <div class="exp-block-desc">
+            <strong>Raspberry Pi 4B</strong> 위에서 MediaPipe 얼굴 인식과
+            TFLite 추론을 파이프라인으로 통합하고, 엔드-투-엔드 추론 지연을
+            <strong>2초 이하</strong>로 최적화했습니다. SIDS 위험 판단 알고리즘을
+            실시간 영상 처리 흐름에 직접 내장했습니다.
+          </div>
+        </div>
+
+        <div class="exp-block">
+          <span class="exp-block-icon">📡</span>
+          <div class="exp-block-title">Sensor Fusion & Control</div>
+          <div class="exp-block-desc">
+            <strong>DHT22</strong> 온습도 센서와 초음파 가습기를 AI 추론 결과와
+            연동하는 <strong>MQTT 기반 제어 루프</strong>를 구현했습니다.
+            위험 감지 시 음악 재생과 환경 조절이 동시에 트리거되는
+            완전 자동화 반응 파이프라인을 구성했습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       스킬 섹션
+  ============================================================ -->
+  <section class="skills" id="skills">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag">Skills</p>
+        <h2 class="section-title">기술 <span class="highlight">역량</span></h2>
+      </div>
+
+      <div class="skills-grid">
+        <div class="reveal delay-1">
+          <div class="skill-group-title">Machine Learning &amp; Vision</div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">TensorFlow / TFLite</span>
+              <span class="skill-bar-pct">88%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.88"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">OpenCV / MediaPipe</span>
+              <span class="skill-bar-pct">90%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.90"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">CNN / MobileNetV2</span>
+              <span class="skill-bar-pct">85%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.85"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">PyTorch</span>
+              <span class="skill-bar-pct">75%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.75"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal delay-2">
+          <div class="skill-group-title">Embedded Systems &amp; IoT</div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">Raspberry Pi</span>
+              <span class="skill-bar-pct">92%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.92"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">Python / C</span>
+              <span class="skill-bar-pct">88%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.88"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">MQTT / IoT Protocol</span>
+              <span class="skill-bar-pct">80%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.80"></div>
+            </div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-header">
+              <span class="skill-bar-name">Linux / Shell</span>
+              <span class="skill-bar-pct">78%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-width="0.78"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOEIC 게이지 -->
+      <div class="english-gauge reveal" style="margin-top:64px;">
+        <div>
+          <div class="gauge-label">TOEIC Score</div>
+          <div class="gauge-score">705</div>
+          <div class="gauge-target">목표: 990점</div>
+          <div class="gauge-bar-wrap">
+            <div class="gauge-bar-fill" id="toeic-bar"></div>
+          </div>
+        </div>
+        <div class="gauge-desc">
+          목표 점수 990점 중 705점을 달성했습니다.
+          지속적인 학습을 통해 영어 커뮤니케이션 역량을 강화하고 있으며,
+          영어 기술 문서 작성 및 글로벌 협업 역량을 꾸준히 향상하고 있습니다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       연락처 섹션
+  ============================================================ -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="reveal">
+        <p class="section-tag" style="justify-content:center; margin-bottom:24px;">Contact</p>
+        <h2 class="contact-title">
+          함께<br/>
+          <span style="background:linear-gradient(135deg,var(--accent-gold),var(--accent-amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">만들어봐요</span>
+        </h2>
+        <p class="contact-desc">
+          협업이나 프로젝트 문의는 언제든 환영합니다.<br/>
+          아래 링크를 통해 바로 연락하실 수 있습니다.
+        </p>
+
+        <!-- ✅ 수정 지점 1: 실제 이메일 주소 적용 + subject 파라미터로 기본 제목 설정 -->
+        <!-- ✅ 수정 지점 2: 깃허브 실제 프로필 URL 연결 -->
+        <!-- ✅ 수정 지점 3: 외부 링크 전체에 rel="noopener noreferrer" 보안 속성 추가 -->
+        <div class="contact-links">
+          <a
+            href="mailto:dongukkim0827@gmail.com?subject=포트폴리오%20문의"
+            class="contact-link"
+          >✉ Email</a>
+          <a
+            href="https://github.com/AISTARTER-BEGIN"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link"
+          >⌥ GitHub</a>
+          <a
+            href="https://linkedin.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link"
+          >in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       푸터
+  ============================================================ -->
+  <footer>
+    <p class="footer-copy">© 2026 — AI / ML Engineer Portfolio</p>
+    <div class="footer-links">
+      <a href="#hero">Top ↑</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JavaScript
+  ============================================================ -->
+  <script>
+    /* ============================================================
+       1. 커스텀 커서 — lerp 보간으로 부드러운 추적
+    ============================================================ */
+    (function () {
+      const cursor         = document.getElementById('cursor');
+      const cursorFollower = document.getElementById('cursor-follower');
+
+      let mouseX = 0, mouseY = 0;
+      let followerX = 0, followerY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top  = mouseY + 'px';
+      });
+
+      /* requestAnimationFrame으로 follower를 부드럽게 보간 */
+      function animateFollower() {
+        followerX += (mouseX - followerX) * 0.12;
+        followerY += (mouseY - followerY) * 0.12;
+        cursorFollower.style.left = followerX + 'px';
+        cursorFollower.style.top  = followerY + 'px';
+        requestAnimationFrame(animateFollower);
+      }
+      animateFollower();
+
+      /* 인터랙티브 요소 위에서 커서 확대 */
+      document.querySelectorAll('a, button, .exp-block, .stat-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width  = '20px';
+          cursor.style.height = '20px';
+          cursorFollower.style.width       = '60px';
+          cursorFollower.style.height      = '60px';
+          cursorFollower.style.borderColor = 'rgba(200,146,42,0.8)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width  = '10px';
+          cursor.style.height = '10px';
+          cursorFollower.style.width       = '40px';
+          cursorFollower.style.height      = '40px';
+          cursorFollower.style.borderColor = 'rgba(200,146,42,0.5)';
+        });
+      });
+    })();
+
+    /* ============================================================
+       2. 파티클 배경 캔버스
+    ============================================================ */
+    (function () {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx    = canvas.getContext('2d');
+      const COUNT  = 120;
+      const particles = [];
+
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function createParticle() {
+        return {
+          x:     Math.random() * canvas.width,
+          y:     Math.random() * canvas.height,
+          r:     Math.random() * 1.5 + 0.3,
+          alpha: Math.random() * 0.6 + 0.1,
+          dx:    (Math.random() - 0.5) * 0.4,
+          dy:   -(Math.random() * 0.3 + 0.1),
+        };
+      }
+
+      for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p) => {
+          p.x += p.dx;
+          p.y += p.dy;
+          /* 화면 밖으로 나가면 하단에서 재시작 */
+          if (p.y < -5 || p.x < -5 || p.x > canvas.width + 5) {
+            Object.assign(p, createParticle());
+            p.y = canvas.height + 5;
+          }
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200,146,42,${p.alpha})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ============================================================
+       3. 네비게이션 스크롤 감지
+    ============================================================ */
+    (function () {
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
+    })();
+
+    /* ============================================================
+       4. Intersection Observer — 스크롤 등장 애니메이션
+    ============================================================ */
+    (function () {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    })();
+
+    /* ============================================================
+       5. 스킬 바 애니메이션 — 뷰포트 진입 시 scaleX로 채움
+    ============================================================ */
+    (function () {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.querySelectorAll('.skill-bar-fill').forEach((fill) => {
+              const targetScale = parseFloat(fill.getAttribute('data-width'));
+              fill.style.transition = 'transform 1.2s cubic-bezier(0.16,1,0.3,1)';
+              fill.style.transform  = `scaleX(${targetScale})`;
+            });
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.3 }
+      );
+      const skillsSection = document.getElementById('skills');
+      if (skillsSection) observer.observe(skillsSection);
+    })();
+
+    /* ============================================================
+       6. TOEIC 게이지 바 애니메이션 (705 / 990 = 71.4%)
+    ============================================================ */
+    (function () {
+      const bar = document.getElementById('toeic-bar');
+      if (!bar) return;
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              bar.style.width = '71.4%';
+              observer.unobserve(bar);
             }
-        }
-
-        // 페이지가 켜지면 즉시 동기화 실행
-        document.addEventListener('DOMContentLoaded', syncData);
-    </script>
+          });
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(bar);
+    })();
+  </script>
 </body>
 </html>
