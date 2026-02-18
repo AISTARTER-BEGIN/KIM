@@ -396,9 +396,8 @@
 
         /* 컨택트 링크 스타일 */
         .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-xs);
+            display: inline-block;
+            text-align: center;
             padding: 12px 24px;
             background: var(--bg-secondary);
             border: 2px solid var(--accent-primary);
@@ -420,9 +419,10 @@
         }
 
         .contact-link .copy-hint {
+            display: block;
             font-size: 0.7em;
             opacity: 0.7;
-            margin-left: 4px;
+            margin-top: 4px;
         }
 
         .contact-links {
@@ -648,6 +648,7 @@
 
             .contact-link {
                 justify-content: center;
+                width: 100%;
             }
         }
 
@@ -888,7 +889,7 @@
                 <a href="mailto:dongukkim0827@gmail.com" 
                    onclick="copyEmail(event)" 
                    class="contact-link">
-                    📧 dongukkim0827@gmail.com
+                    📧 dongukkim0827@gmail.com<br>
                     <span class="copy-hint">(클릭하여 복사)</span>
                 </a>
                 <a href="https://github.com/AISTARTER-BEGIN" 
