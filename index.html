@@ -908,6 +908,19 @@
 
     <script>
         /* 이메일 복사 기능 */
+        if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    }
+    
+    window.addEventListener('beforeunload', () => {
+        window.scrollTo(0, 0);
+    });
+    
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 0);
+    });
         function copyEmail(e) {
             // 모바일은 기본 동작(메일 앱 열기) 허용
             if (window.innerWidth <= 768) {
