@@ -157,12 +157,25 @@
       text-transform: uppercase; text-decoration: none; letter-spacing: 0.1em; margin-bottom: 1rem;
       transition: all 0.3s;
     }
-    .cta-primary { background: var(--accent-gold); color: var(--bg-void); }
+    .cta-primary { background: var(--accent-gold); color: var(--bg-void); cursor: none; }
     .cta-primary:hover { background: var(--text-primary); }
-    .cta-secondary { border: 1px solid var(--border-subtle); color: var(--text-primary); }
+    .cta-secondary { border: 1px solid var(--border-subtle); color: var(--text-primary); cursor: none; }
     .cta-secondary:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
 
     .result-disclaimer { font-size: 0.75rem; color: #555; text-align: center; margin-top: 2rem; }
+
+    /* === 토스트 알림 === */
+    .toast {
+      position: fixed; bottom: 40px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--accent-gold); border: none;
+      color: var(--bg-void); font-size: 13px; font-weight: 900;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 16px 32px; z-index: 99999;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* === Footer === */
     .site-footer {
@@ -335,7 +348,7 @@
             <p class="summary-title">Selected Modules</p>
             <ul class="summary-list" id="summaryList"></ul>
 
-            <a href="mailto:dongukkim0827@gmail.com?subject=AI%20솔루션%20견적%20문의" class="cta-button cta-primary">
+            <a href="mailto:dongukkim0827@gmail.com?subject=AI%20솔루션%20견적%20문의" id="email-btn" class="cta-button cta-primary">
               INITIATE CONTACT
             </a>
             <a href="../index.html" class="cta-button cta-secondary">
@@ -353,19 +366,20 @@
     </form>
   </main>
 
+  <div class="toast" id="toast">✔ 이메일이 복사되었습니다</div>
+
   <footer class="site-footer">
     <p>© 2026 — ESTIMATOR MODULE INTEGRATED. ALL SYSTEMS NOMINAL.</p>
   </footer>
 
   <script>
-    // 커스텀 커서 로직
+    // 1. 커스텀 커서 및 호버 로직
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', (e) => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
     });
     
-    // 호버 효과
     document.querySelectorAll('a, label').forEach(el => {
       el.addEventListener('mouseenter', () => {
         cursor.style.transform = 'translate(-50%, -50%) scale(3)';
@@ -376,6 +390,50 @@
         cursor.style.background = 'var(--accent-gold)';
       });
     });
+
+    // 2. 이메일 복사 기능 로직 추가
+    (function () {
+      const EMAIL      = 'dongukkim0827@gmail.com';
+      const SUBJECT    = encodeURIComponent('AI 솔루션 견적 문의');
+      const btn        = document.getElementById('email-btn');
+      const toast      = document.getElementById('toast');
+      let   toastTimer = null;
+
+      function showToast() {
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+      }
+
+      function legacyCopy() {
+        const ta = document.createElement('textarea');
+        ta.value = EMAIL;
+        ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+        document.body.appendChild(ta);
+        ta.select();
+        try   { document.execCommand('copy'); showToast(); }
+        catch { window.location.href = `mailto:${EMAIL}?subject=${SUBJECT}`; }
+        finally { document.body.removeChild(ta); }
+      }
+
+      if(btn) {
+        btn.addEventListener('click', (e) => {
+          const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+          if (isMobile) {
+            // 모바일 환경일 경우 기본 동작(메일 앱 열기) 허용
+            return;
+          } else {
+            // 데스크톱 환경에서는 링크 이동 막고 클립보드 복사 실행
+            e.preventDefault();
+            if (navigator.clipboard && window.isSecureContext) {
+              navigator.clipboard.writeText(EMAIL).then(showToast).catch(legacyCopy);
+            } else {
+              legacyCopy();
+            }
+          }
+        });
+      }
+    })();
   </script>
 
   <script src="estimator.js"></script>
