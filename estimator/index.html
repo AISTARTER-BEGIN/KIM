@@ -1,354 +1,288 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI 솔루션 도입 온라인 견적 계산기 — DongUk KIM, AI/ML Engineer">
-    <title>AI 견적 계산기 | DongUk KIM</title>
-    <link rel="stylesheet" href="estimator.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Solution Estimator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="estimator.css" />
 </head>
+
 <body>
 
-    <!-- 배경 장식 -->
-    <div class="blob" aria-hidden="true"></div>
+  <!-- 배경 blob 장식 -->
+  <div class="blob"></div>
 
-    <!-- ─── 헤더 / 네비게이션 ─── -->
-    <header class="site-header">
-        <a href="../index1.html" class="back-link">← 포트폴리오로 돌아가기</a>
-        <span class="site-logo">DongUk KIM</span>
-    </header>
+  <!-- ============================================================
+       헤더
+  ============================================================ -->
+  <header class="site-header">
+    <a href="../index.html" class="back-link">← 포트폴리오로 돌아가기</a>
+    <span class="site-logo">AI · ML</span>
+  </header>
 
-    <!-- ─── 히어로 섹션 ─── -->
-    <section class="hero-section">
-        <p class="hero-eyebrow">AI Solution Estimator</p>
-        <h1 class="hero-title">
-            <span class="line"><span>AI 도입 비용을</span></span>
-            <span class="line"><span class="accent">지금 바로 계산</span></span>
-        </h1>
-        <p class="hero-subtitle">
-            원하는 기술 스택과 플랫폼을 선택하면 예상 개발 기간과 비용 범위를 즉시 알려드립니다.
-            선택 즉시 우측 패널에 결과가 자동 업데이트됩니다.
-        </p>
-    </section>
+  <!-- ============================================================
+       히어로
+  ============================================================ -->
+  <section class="hero-section">
+    <p class="hero-eyebrow">AI Solution Estimator</p>
+    <h1 class="hero-title">
+      <span class="line"><span>원하는 기술 스택을 선택하면</span></span>
+      <span class="line"><span class="accent">예상 비용과 기간을 즉시 확인하세요</span></span>
+    </h1>
+    <p class="hero-subtitle">
+      선택 즉시 우측 패널에 결과가 자동 업데이트됩니다.<br />
+      모든 항목은 실제 수행한 프로젝트 기반으로 산정됩니다.
+    </p>
+  </section>
 
-    <!-- ─── 메인 레이아웃: 입력(좌) + 결과(우) ─── -->
-    <main class="estimator-layout">
+  <!-- ============================================================
+       메인 레이아웃 — 입력(좌) + 결과(우)
+  ============================================================ -->
+  <main>
+    <form id="estimatorForm" novalidate>
+      <div class="estimator-layout">
 
-        <!-- ══════════════════════════════
+        <!-- ────────────────────────────────────────
              입력 패널
-        ══════════════════════════════ -->
-        <form class="input-panel" id="estimatorForm" novalidate>
+        ──────────────────────────────────────── -->
+        <div class="input-panel">
 
-            <!-- ── STEP 01: AI 기술 선택 ── -->
-            <section class="form-section glass-card">
-                <span class="step-badge">Step 01</span>
-                <h2>AI 기술 선택 <span class="optional-hint">(복수 선택 가능)</span></h2>
-                <p class="section-desc">구현하고 싶은 AI 기능을 모두 선택하세요.</p>
+          <!-- Step 1: AI 기술 선택 -->
+          <div class="glass-card form-section">
+            <span class="step-badge">Step 1 — 복수 선택 가능</span>
+            <h2>구현할 AI 기능을 선택하세요</h2>
+            <p class="section-desc">
+              실제 개발 가능한 기능만 포함되어 있습니다.
+            </p>
 
-                <div class="option-grid" id="techGrid"
-                     role="group" aria-label="AI 기술 선택">
+            <div class="option-grid">
 
-                    <label class="option-card" for="tech_cv_detection">
-                        <input type="checkbox"
-                               id="tech_cv_detection"
-                               name="techs"
-                               value="cv_detection">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">👁</span>
-                            <span class="option-label">CV — 객체 감지</span>
-                            <span class="option-sub">Computer Vision Detection</span>
-                            <span class="option-meta">+3주 / +₩250만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="tech_cv_classification">
-                        <input type="checkbox"
-                               id="tech_cv_classification"
-                               name="techs"
-                               value="cv_classification">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">🔍</span>
-                            <span class="option-label">CV — 분류/인식</span>
-                            <span class="option-sub">Image Classification</span>
-                            <span class="option-meta">+2주 / +₩180만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="tech_sensor_integration">
-                        <input type="checkbox"
-                               id="tech_sensor_integration"
-                               name="techs"
-                               value="sensor_integration">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">📡</span>
-                            <span class="option-label">센서 데이터 통합</span>
-                            <span class="option-sub">IMU / 환경 센서</span>
-                            <span class="option-meta">+2주 / +₩120만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="tech_edge_inference">
-                        <input type="checkbox"
-                               id="tech_edge_inference"
-                               name="techs"
-                               value="edge_inference">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">⚡</span>
-                            <span class="option-label">엣지 AI 최적화</span>
-                            <span class="option-sub">TFLite / ONNX</span>
-                            <span class="option-meta">+3주 / +₩200만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="tech_data_pipeline">
-                        <input type="checkbox"
-                               id="tech_data_pipeline"
-                               name="techs"
-                               value="data_pipeline">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">🔄</span>
-                            <span class="option-label">데이터 파이프라인</span>
-                            <span class="option-sub">수집 / 전처리</span>
-                            <span class="option-meta">+2주 / +₩150만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="tech_dashboard">
-                        <input type="checkbox"
-                               id="tech_dashboard"
-                               name="techs"
-                               value="dashboard">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">📊</span>
-                            <span class="option-label">모니터링 대시보드</span>
-                            <span class="option-sub">실시간 시각화</span>
-                            <span class="option-meta">+2주 / +₩100만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
+              <!-- CV — 객체 감지 -->
+              <label class="option-card">
+                <input type="checkbox" name="techs" value="cv_detection" />
+                <div class="option-card-inner">
+                  <span class="option-icon">👁️</span>
+                  <span class="option-label">CV — 객체 감지</span>
+                  <span class="option-sub">카메라 영상에서 특정 대상 실시간 감지</span>
+                  <span class="option-meta">+3주 / +250만</span>
                 </div>
-            </section>
+                <span class="option-check-mark" aria-hidden="true">✓</span>
+              </label>
 
-            <!-- ── STEP 02: 플랫폼 선택 ── -->
-            <section class="form-section glass-card">
-                <span class="step-badge">Step 02</span>
-                <h2>하드웨어 플랫폼 <span class="optional-hint required-hint">(필수 선택)</span></h2>
-                <p class="section-desc">목표 배포 환경을 선택하세요.</p>
-
-                <div class="option-grid platform-grid"
-                     id="platformGrid"
-                     role="group" aria-label="플랫폼 선택">
-
-                    <label class="option-card" for="platform_rpi">
-                        <input type="radio"
-                               id="platform_rpi"
-                               name="platform"
-                               value="rpi">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">🍓</span>
-                            <span class="option-label">Raspberry Pi</span>
-                            <span class="option-sub">Pi 5 / CM4</span>
-                            <span class="option-meta">+1주 / +₩50만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="platform_jetson">
-                        <input type="radio"
-                               id="platform_jetson"
-                               name="platform"
-                               value="jetson">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">🚀</span>
-                            <span class="option-label">NVIDIA Jetson</span>
-                            <span class="option-sub">Nano / Orin</span>
-                            <span class="option-meta">+2주 / +₩150만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="platform_x86">
-                        <input type="radio"
-                               id="platform_x86"
-                               name="platform"
-                               value="x86_linux">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">🖥</span>
-                            <span class="option-label">x86 Linux 서버</span>
-                            <span class="option-sub">On-premise</span>
-                            <span class="option-meta">기준값</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
-                    <label class="option-card" for="platform_cloud">
-                        <input type="radio"
-                               id="platform_cloud"
-                               name="platform"
-                               value="cloud">
-                        <div class="option-card-inner">
-                            <span class="option-icon" aria-hidden="true">☁️</span>
-                            <span class="option-label">클라우드</span>
-                            <span class="option-sub">AWS / GCP</span>
-                            <span class="option-meta">+1주 / +₩80만</span>
-                        </div>
-                        <span class="option-check-mark" aria-hidden="true">✓</span>
-                    </label>
-
+              <!-- CV — 분류/인식 -->
+              <label class="option-card">
+                <input type="checkbox" name="techs" value="cv_classification" />
+                <div class="option-card-inner">
+                  <span class="option-icon">🧠</span>
+                  <span class="option-label">CV — 분류/인식</span>
+                  <span class="option-sub">MobileNetV2 · TFLite 경량 분류 모델</span>
+                  <span class="option-meta">+2주 / +180만</span>
                 </div>
-            </section>
+                <span class="option-check-mark" aria-hidden="true">✓</span>
+              </label>
 
-            <!-- ── STEP 03: 복잡도 선택 ── -->
-            <section class="form-section glass-card">
-                <span class="step-badge">Step 03</span>
-                <h2>프로젝트 복잡도</h2>
-                <p class="section-desc">프로젝트의 목표 수준을 선택하세요. 기본값은 Standard입니다.</p>
-
-                <div class="complexity-group"
-                     role="group" aria-label="복잡도 선택">
-
-                    <label class="complexity-card" for="complexity_simple">
-                        <input type="radio"
-                               id="complexity_simple"
-                               name="complexity"
-                               value="simple">
-                        <div class="complexity-inner">
-                            <div class="complexity-level" aria-hidden="true">
-                                <span class="dot dot--1"></span>
-                                <span class="dot dot--off"></span>
-                                <span class="dot dot--off"></span>
-                            </div>
-                            <strong>Simple</strong>
-                            <span>단일 기능 · 데모 수준</span>
-                            <em>× 1.0</em>
-                        </div>
-                    </label>
-
-                    <label class="complexity-card" for="complexity_standard">
-                        <input type="radio"
-                               id="complexity_standard"
-                               name="complexity"
-                               value="standard"
-                               checked>
-                        <div class="complexity-inner">
-                            <div class="complexity-level" aria-hidden="true">
-                                <span class="dot dot--2"></span>
-                                <span class="dot dot--2"></span>
-                                <span class="dot dot--off"></span>
-                            </div>
-                            <strong>Standard</strong>
-                            <span>실사용 가능한 MVP</span>
-                            <em>× 1.5</em>
-                        </div>
-                    </label>
-
-                    <label class="complexity-card" for="complexity_complex">
-                        <input type="radio"
-                               id="complexity_complex"
-                               name="complexity"
-                               value="complex">
-                        <div class="complexity-inner">
-                            <div class="complexity-level" aria-hidden="true">
-                                <span class="dot dot--3"></span>
-                                <span class="dot dot--3"></span>
-                                <span class="dot dot--3"></span>
-                            </div>
-                            <strong>Complex</strong>
-                            <span>다중 기능 · 안정성 요구</span>
-                            <em>× 2.2</em>
-                        </div>
-                    </label>
-
+              <!-- 센서 데이터 통합 -->
+              <label class="option-card">
+                <input type="checkbox" name="techs" value="sensor_integration" />
+                <div class="option-card-inner">
+                  <span class="option-icon">🌡️</span>
+                  <span class="option-label">센서 데이터 통합</span>
+                  <span class="option-sub">온습도·거리 등 IoT 센서와 AI 연동</span>
+                  <span class="option-meta">+2주 / +120만</span>
                 </div>
-            </section>
+                <span class="option-check-mark" aria-hidden="true">✓</span>
+              </label>
 
-        </form><!-- /input-panel -->
-
-        <!-- ══════════════════════════════
-             결과 패널
-        ══════════════════════════════ -->
-        <aside class="result-panel" aria-live="polite" aria-label="견적 결과">
-            <div class="result-sticky">
-
-                <!-- 선택 전 플레이스홀더 -->
-                <div class="result-placeholder glass-card" id="resultPlaceholder">
-                    <span class="placeholder-icon" aria-hidden="true">🧮</span>
-                    <p>AI 기술과 플랫폼을 선택하면<br>견적이 여기에 나타납니다.</p>
+              <!-- 엣지 AI 최적화 -->
+              <label class="option-card">
+                <input type="checkbox" name="techs" value="edge_inference" />
+                <div class="option-card-inner">
+                  <span class="option-icon">⚡</span>
+                  <span class="option-label">엣지 AI 최적화</span>
+                  <span class="option-sub">라즈베리파이 추론 지연 최소화</span>
+                  <span class="option-meta">+3주 / +200만</span>
                 </div>
+                <span class="option-check-mark" aria-hidden="true">✓</span>
+              </label>
 
-                <!-- 선택 후 결과 카드 (JS가 hidden 제거) -->
-                <div class="result-card glass-card" id="resultCard" hidden>
+            </div>
+          </div>
 
-                    <div class="result-header">
-                        <span class="result-badge">견적 결과</span>
-                    </div>
+          <!-- ============================================================
+               Step 2: 하드웨어 플랫폼 (Raspberry Pi 고정)
+               — NVIDIA Jetson / x86 Linux 서버 / 클라우드 제거
+               — 실제 보유·경험한 하드웨어만 명시
+          ============================================================ -->
+          <div class="glass-card form-section">
+            <span class="step-badge">Step 2 — 플랫폼 고정</span>
+            <h2>하드웨어 플랫폼</h2>
+            <p class="section-desc">
+              검증된 플랫폼에서 안정적으로 구현합니다.
+            </p>
 
-                    <!-- 예상 개발 기간 -->
-                    <div class="result-metric">
-                        <span class="result-metric-label">예상 개발 기간</span>
-                        <div class="result-metric-value">
-                            <span class="result-value-main" id="durationDisplay">—</span>
-                            <span class="result-value-unit">주</span>
-                        </div>
-                        <span class="result-range" id="durationRange"></span>
-                    </div>
+            <!-- 선택 UI 없이 고정 배지로 표시 -->
+            <div class="platform-fixed">
+              <div class="platform-fixed-card">
+                <span class="option-icon">🍓</span>
+                <div class="platform-fixed-info">
+                  <span class="option-label">Raspberry Pi</span>
+                  <span class="option-sub">
+                    Baby Sleep Monitor AI 프로젝트에서 직접 구현·검증한 플랫폼입니다.
+                    TFLite 추론, MediaPipe, DHT22 센서 연동, MQTT 제어 루프를
+                    Raspberry Pi 4B 위에서 실제로 동작시킨 경험을 바탕으로 견적을 산정합니다.
+                  </span>
+                </div>
+                <span class="platform-fixed-badge">검증 완료</span>
+              </div>
+            </div>
 
-                    <div class="result-divider" aria-hidden="true"></div>
+          </div>
 
-                    <!-- 예상 개발 비용 -->
-                    <div class="result-metric">
-                        <span class="result-metric-label">예상 개발 비용</span>
-                        <div class="result-metric-value">
-                            <span class="result-value-main" id="costDisplay">—</span>
-                            <span class="result-value-unit">원</span>
-                        </div>
-                        <span class="result-range" id="costRange"></span>
-                    </div>
+          <!-- Step 3: 복잡도 선택 -->
+          <div class="glass-card form-section">
+            <span class="step-badge">Step 3 — 단일 선택 <span class="required-hint">*필수</span></span>
+            <h2>프로젝트 복잡도</h2>
+            <p class="section-desc">
+              프로젝트의 목표 수준을 선택하세요. 기본값은 Standard입니다.
+            </p>
 
-                    <div class="result-divider" aria-hidden="true"></div>
+            <div class="complexity-group">
 
-                    <!-- 선택 항목 요약 -->
-                    <div class="result-summary">
-                        <p class="summary-title">선택 항목 요약</p>
-                        <ul class="summary-list" id="summaryList">
-                            <!-- JS가 동적으로 채움 -->
-                        </ul>
-                    </div>
+              <!-- Simple -->
+              <label class="complexity-card">
+                <input type="radio" name="complexity" value="simple" />
+                <div class="complexity-inner">
+                  <div class="complexity-level">
+                    <span class="dot dot--1"></span>
+                    <span class="dot dot--off"></span>
+                    <span class="dot dot--off"></span>
+                  </div>
+                  <strong>Simple</strong>
+                  <span>단일 기능 · 소규모 데이터셋 · 빠른 검증</span>
+                  <em>×1.0</em>
+                </div>
+              </label>
 
-                    <!-- 면책 고지 -->
-                    <p class="result-disclaimer">
-                        ※ 실제 견적은 요구사항 상세 분석 후 조정될 수 있습니다.
-                    </p>
+              <!-- Standard (기본 선택) -->
+              <label class="complexity-card">
+                <input type="radio" name="complexity" value="standard" checked />
+                <div class="complexity-inner">
+                  <div class="complexity-level">
+                    <span class="dot dot--1"></span>
+                    <span class="dot dot--2"></span>
+                    <span class="dot dot--off"></span>
+                  </div>
+                  <strong>Standard</strong>
+                  <span>복수 기능 통합 · 실시간 처리 · 안정화 포함</span>
+                  <em>×1.5</em>
+                </div>
+              </label>
 
-                    <!-- CTA 버튼 -->
-                    <a href="mailto:dongukkim0827@gmail.com?subject=AI%20솔루션%20개발%20문의"
-                       class="cta-button">
-                        📧 상세 견적 문의하기
-                    </a>
-                    <a href="../index1.html" class="cta-button cta-button--secondary">
-                        💼 포트폴리오 보기
-                    </a>
+              <!-- Complex -->
+              <label class="complexity-card">
+                <input type="radio" name="complexity" value="complex" />
+                <div class="complexity-inner">
+                  <div class="complexity-level">
+                    <span class="dot dot--1"></span>
+                    <span class="dot dot--2"></span>
+                    <span class="dot dot--3"></span>
+                  </div>
+                  <strong>Complex</strong>
+                  <span>멀티 모달 · 커스텀 학습 · 하드웨어 최적화</span>
+                  <em>×2.2</em>
+                </div>
+              </label>
 
-                </div><!-- /result-card -->
+            </div>
+          </div>
 
-            </div><!-- /result-sticky -->
-        </aside>
+        </div><!-- /input-panel -->
 
-    </main><!-- /estimator-layout -->
+        <!-- ────────────────────────────────────────
+             결과 패널 (sticky)
+        ──────────────────────────────────────── -->
+        <div class="result-sticky">
 
-    <!-- ─── 푸터 ─── -->
-    <footer class="site-footer">
-        <p>© 2026 DongUk KIM · AI Solution Estimator · 예상 견적은 참고용이며 실제와 다를 수 있습니다.</p>
-    </footer>
+          <!-- 플레이스홀더 (기술 미선택 시 표시) -->
+          <div class="glass-card result-placeholder" id="resultPlaceholder" hidden>
+            <span class="placeholder-icon">🤖</span>
+            <p>
+              좌측에서 원하는 AI 기능을 선택하면<br />
+              예상 기간과 비용이 여기에 표시됩니다.
+            </p>
+          </div>
 
-    <!-- Step 2에서 구현되는 비즈니스 로직 -->
-    <script src="estimator.js" defer></script>
+          <!-- 결과 카드 (선택 시 표시) -->
+          <div class="glass-card result-card" id="resultCard" hidden>
+
+            <div class="result-header">
+              <span class="result-badge">예상 견적</span>
+            </div>
+
+            <!-- 개발 기간 -->
+            <div class="result-metric">
+              <span class="result-metric-label">예상 개발 기간</span>
+              <div class="result-metric-value">
+                <span class="result-value-main" id="durationDisplay">—</span>
+                <span class="result-value-unit">주</span>
+              </div>
+              <span class="result-range" id="durationRange"></span>
+            </div>
+
+            <div class="result-divider"></div>
+
+            <!-- 개발 비용 -->
+            <div class="result-metric">
+              <span class="result-metric-label">예상 개발 비용</span>
+              <div class="result-metric-value">
+                <span class="result-value-main" id="costDisplay">—</span>
+                <span class="result-value-unit">원</span>
+              </div>
+              <span class="result-range" id="costRange"></span>
+            </div>
+
+            <div class="result-divider"></div>
+
+            <!-- 선택 항목 요약 -->
+            <p class="summary-title">선택된 항목</p>
+            <ul class="summary-list" id="summaryList"></ul>
+
+            <p class="result-disclaimer">
+              본 견적은 참고용 범위이며, 실제 요구사항 검토 후 최종 확정됩니다.
+              부가세 별도.
+            </p>
+
+            <!-- CTA -->
+            <a href="mailto:dongukkim0827@gmail.com?subject=견적%20문의" class="cta-button">
+              견적 문의하기 →
+            </a>
+            <a href="../index.html#contact" class="cta-button cta-button--secondary">
+              포트폴리오 보기
+            </a>
+
+          </div><!-- /result-card -->
+
+        </div><!-- /result-sticky -->
+
+      </div><!-- /estimator-layout -->
+    </form>
+  </main>
+
+  <!-- ============================================================
+       푸터
+  ============================================================ -->
+  <footer class="site-footer">
+    <p>© 2026 — AI / ML Engineer Portfolio · 견적은 참고용이며 실제와 다를 수 있습니다.</p>
+  </footer>
+
+  <script src="estimator.js"></script>
 
 </body>
 </html>
