@@ -66,6 +66,9 @@
       pointer-events: none; z-index: 0; opacity: 0.6;
     }
 
+    /* ============================================================
+       네비게이션
+    ============================================================ */
     .nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 1000; padding: 20px 5%;
@@ -89,6 +92,9 @@
     }
     .nav-logo:hover::after { width: 100%; }
 
+    .nav-right {
+      display: flex; align-items: center; gap: 40px;
+    }
     .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
       font-size: 12px; font-weight: 500; letter-spacing: 0.2em;
@@ -103,6 +109,41 @@
     .nav-links a:hover { color: var(--accent-gold); }
     .nav-links a:hover::after { width: 100%; }
 
+    /* ============================================================
+       [index1.html 이식] 네비게이션 — AI 견적 계산기 버튼
+       다크 테마에 맞게 골드 계열로 재설계
+    ============================================================ */
+    .nav-estimator-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px;
+      background: transparent;
+      color: var(--accent-gold);
+      font-family: var(--font-sans);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--border-glow);
+      cursor: none;
+      position: relative; overflow: hidden;
+      transition: background 0.3s ease, color 0.3s ease,
+                  box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .nav-estimator-btn::before {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(200,146,42,0.15), transparent);
+      transition: left 0.5s ease;
+    }
+    .nav-estimator-btn:hover {
+      background: rgba(200,146,42,0.1);
+      box-shadow: 0 0 20px rgba(200,146,42,0.25);
+      transform: translateY(-2px);
+    }
+    .nav-estimator-btn:hover::before { left: 100%; }
+
+    /* ============================================================
+       히어로 섹션
+    ============================================================ */
     .hero {
       position: relative; min-height: 100vh;
       display: flex; flex-direction: column;
@@ -198,7 +239,7 @@
     }
 
     /* ============================================================
-       PC 기본 section-title (clamp 최솟값 24px로 설정)
+       PC 기본 section-title
     ============================================================ */
     .section-title {
       font-size: clamp(24px, 4vw, 52px); font-weight: 800;
@@ -240,6 +281,9 @@
     }
     .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); transform: translateY(-2px); }
 
+    /* ============================================================
+       About 섹션
+    ============================================================ */
     .about { background: var(--bg-deep); }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     .about-text p {
@@ -274,14 +318,12 @@
     .stat-item:hover::before { height: 100%; }
 
     /* ============================================================
-       PC 기본 stat-number — 크게 표시
-       모바일 전용 값은 아래 @media (max-width: 768px) 안에서만 정의
+       PC stat-number — 크게 표시
+       모바일 전용 값은 @media (max-width: 768px) 안에서만 정의
     ============================================================ */
     .stat-number {
-      font-size: 48px;                        /* PC에서 표시될 크기 */
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
+      font-size: 48px;
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text; margin-bottom: 8px;
@@ -292,6 +334,9 @@
     }
     .stat-desc { font-size: 13px; color: var(--text-secondary); margin-top: 6px; font-weight: 300; }
 
+    /* ============================================================
+       Projects 섹션
+    ============================================================ */
     .projects { background: var(--bg-void); }
     .project-featured-banner {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -359,6 +404,9 @@
     }
     .project-tag.green { background: rgba(26,154,92,0.1); color: #1a9a5c; border-color: rgba(26,154,92,0.2); }
 
+    /* ============================================================
+       Experience 섹션
+    ============================================================ */
     .experience { background: var(--bg-deep); }
     .exp-header {
       display: flex; align-items: flex-start; justify-content: space-between;
@@ -399,6 +447,9 @@
     .exp-block-desc { font-size: 13px; font-weight: 300; color: var(--text-secondary); line-height: 1.85; }
     .exp-block-desc strong { color: var(--text-primary); font-weight: 600; }
 
+    /* ============================================================
+       Skills 섹션
+    ============================================================ */
     .skills { background: var(--bg-void); }
     .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 80px; }
     .skill-group-title {
@@ -443,6 +494,9 @@
     }
     .gauge-desc { font-size: 15px; font-weight: 300; line-height: 1.9; color: var(--text-secondary); }
 
+    /* ============================================================
+       Contact 섹션
+    ============================================================ */
     .contact { background: var(--bg-void); }
     .contact-inner { max-width: 800px; margin: 0 auto; text-align: center; padding: 120px 5%; }
     .contact-title {
@@ -460,12 +514,25 @@
       border: 1px solid var(--border-subtle); color: var(--text-secondary);
       font-family: var(--font-sans); font-size: 12px; font-weight: 600;
       letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
-      cursor: none;
+      cursor: none; flex-direction: column;
       transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease;
     }
     .contact-link:hover {
       border-color: var(--accent-gold); color: var(--accent-gold);
       background: rgba(200,146,42,0.06); transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       [index1.html 이식] contact-link 안 서브텍스트
+    ============================================================ */
+    .contact-link .copy-hint {
+      display: block;
+      font-size: 0.75em;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+      margin-top: 3px;
+      text-transform: none;
     }
 
     .toast {
@@ -518,19 +585,17 @@
     /* ============================================================
        모바일 반응형 (768px 이하)
        — 이 블록 안에서만 모바일 전용 값을 덮어씁니다
-       — 이 블록 밖에는 절대 모바일용 규칙을 쓰지 않습니다
     ============================================================ */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .english-gauge { grid-template-columns: 1fr; padding: 32px 24px; }
-      footer { flex-direction: column; gap: 16px; text-align: center; }
-      body { cursor: auto; }
+      .nav-links        { display: none; }
+      .nav-estimator-btn { font-size: 10px; padding: 7px 13px; }
+      .english-gauge    { grid-template-columns: 1fr; padding: 32px 24px; }
+      footer            { flex-direction: column; gap: 16px; text-align: center; }
+      body              { cursor: auto; }
       .cursor, .cursor-follower { display: none; }
 
-      /* section-title: 모바일에서만 작게 */
       .section-title { font-size: clamp(22px, 6vw, 36px); }
 
-      /* stat 카드: 패딩 줄이고 숫자 크기 축소 */
       .stat-item   { padding: 20px 14px; }
       .stat-number { font-size: 24px; letter-spacing: -0.02em; }
       .stat-label  { font-size: 10px; }
@@ -546,13 +611,19 @@
 
   <nav class="nav" id="nav">
     <a href="#" class="nav-logo">AI · ML</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <!-- [index1.html 이식] AI 견적 계산기 네비게이션 버튼 -->
+      <a href="estimator/index.html" class="nav-estimator-btn">
+        🧮 AI 견적 계산기
+      </a>
+    </div>
   </nav>
 
   <section class="hero" id="hero">
@@ -864,8 +935,21 @@
           아래 링크를 통해 바로 연락하실 수 있습니다.
         </p>
         <div class="contact-links">
-          <button id="email-btn" class="contact-link" type="button">✉ Email</button>
-          <a href="https://github.com/AISTARTER-BEGIN" target="_blank" rel="noopener noreferrer" class="contact-link">⌥ GitHub</a>
+          <!-- 이메일 복사 버튼 -->
+          <button id="email-btn" class="contact-link" type="button">
+            ✉ Email
+            <span class="copy-hint">클릭하여 복사</span>
+          </button>
+          <!-- GitHub -->
+          <a href="https://github.com/AISTARTER-BEGIN" target="_blank" rel="noopener noreferrer" class="contact-link">
+            ⌥ GitHub
+            <span class="copy-hint">AISTARTER-BEGIN</span>
+          </a>
+          <!-- [index1.html 이식] AI 견적 계산기 링크 -->
+          <a href="estimator/index.html" class="contact-link">
+            🧮 AI 견적 계산기
+            <span class="copy-hint">개발 비용 바로 확인</span>
+          </a>
         </div>
       </div>
     </div>
