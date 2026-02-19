@@ -3,284 +3,380 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Solution Estimator</title>
+  <title>ESTIMATOR // AI SYSTEM</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="estimator.css" />
+  <style>
+    :root {
+      /* === RESN VIBE: Pitch Black & Neon Yellow === */
+      --bg-void:       #050505;
+      --bg-surface:    #111111;
+      --accent-gold:   #E1FF00;
+      --text-primary:  #F3F3F3;
+      --text-secondary:#888888;
+      --border-subtle: rgba(255, 255, 255, 0.15);
+      --font-sans:     'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-mono:     'Courier New', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-void);
+      color: var(--text-primary);
+      line-height: 1.6;
+      cursor: none; /* 커스텀 커서 */
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === Custom Cursor === */
+    .cursor {
+      position: fixed; width: 15px; height: 15px;
+      background: var(--accent-gold); border-radius: 50%;
+      pointer-events: none; z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease;
+      mix-blend-mode: difference;
+    }
+
+    /* === Header === */
+    .site-header {
+      padding: 2vw 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase;
+    }
+    .back-link {
+      color: var(--text-secondary); text-decoration: none; transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--accent-gold); }
+    .site-logo { font-weight: 900; letter-spacing: 0.2em; color: var(--text-primary); }
+
+    /* === Hero === */
+    .hero-section {
+      padding: 6vw 5vw 4vw; border-bottom: 1px solid var(--border-subtle);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-gold);
+      letter-spacing: 0.2em; margin-bottom: 1rem; text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 1;
+      text-transform: uppercase; letter-spacing: -0.03em; margin-bottom: 2rem;
+    }
+    .hero-title .accent { color: transparent; -webkit-text-stroke: 1px var(--accent-gold); }
+    .hero-subtitle {
+      font-size: 1.1rem; color: var(--text-secondary); max-width: 600px;
+    }
+
+    /* === Layout === */
+    main { padding: 5vw; }
+    .estimator-layout {
+      display: grid; grid-template-columns: 1fr 400px; gap: 4vw; align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .estimator-layout { grid-template-columns: 1fr; }
+    }
+
+    /* === Form Sections === */
+    .form-section {
+      margin-bottom: 4vw;
+    }
+    .step-badge {
+      display: inline-block; font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--bg-void); background: var(--text-primary);
+      padding: 4px 10px; font-weight: bold; margin-bottom: 1rem; text-transform: uppercase;
+    }
+    .form-section h2 {
+      font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .section-desc { color: var(--text-secondary); margin-bottom: 2rem; }
+
+    /* === Option Cards (Checkboxes & Radios) === */
+    .option-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    
+    .hidden-input { display: none; }
+    
+    .option-card {
+      display: block; border: 1px solid var(--border-subtle); padding: 1.5rem;
+      background: var(--bg-surface); transition: all 0.3s; position: relative;
+    }
+    .option-card:hover { border-color: var(--accent-gold); }
+    
+    /* Checked State Magic */
+    .hidden-input:checked + .option-card {
+      background: var(--accent-gold); color: var(--bg-void); border-color: var(--accent-gold);
+    }
+    .hidden-input:checked + .option-card .option-sub,
+    .hidden-input:checked + .option-card .option-meta { color: var(--bg-void); opacity: 0.8; }
+    
+    .option-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .option-icon { font-size: 1.5rem; }
+    .option-label { font-size: 1.2rem; font-weight: 900; text-transform: uppercase; }
+    .option-sub { display: block; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .option-meta { font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; color: var(--text-secondary); }
+
+    /* === Complexity Group === */
+    .complexity-group { display: flex; flex-direction: column; gap: 1rem; }
+    .complexity-level { margin-bottom: 10px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 2px; }
+
+    /* === Fixed Platform === */
+    .platform-fixed-card {
+      border-left: 4px solid var(--accent-gold); padding: 2rem; background: var(--bg-surface);
+    }
+    .platform-fixed-badge {
+      display: inline-block; margin-top: 1rem; font-family: var(--font-mono);
+      font-size: 0.75rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 4px 10px;
+    }
+
+    /* === Result Panel (Sticky) === */
+    .result-sticky { position: sticky; top: 5vw; }
+    .result-card, .result-placeholder {
+      border: 1px solid var(--border-subtle); padding: 2.5rem; background: var(--bg-surface);
+    }
+    .result-placeholder { text-align: center; color: var(--text-secondary); }
+    .placeholder-icon { font-size: 3rem; display: block; margin-bottom: 1rem; opacity: 0.5; }
+
+    .result-header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle); }
+    .result-badge { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-gold); font-weight: bold; }
+
+    .result-metric { margin-bottom: 2rem; }
+    .result-metric-label { font-size: 0.85rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.1em; }
+    .result-metric-value { font-size: 3.5rem; font-weight: 900; color: var(--text-primary); line-height: 1; margin: 0.5rem 0; }
+    .result-value-unit { font-size: 1.5rem; font-weight: normal; color: var(--text-secondary); }
+    .result-range { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-gold); }
+
+    .summary-title { font-size: 0.85rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 1rem; }
+    .summary-list { list-style: none; margin-bottom: 2rem; font-family: var(--font-mono); font-size: 0.85rem; }
+    .summary-list li { padding: 8px 0; border-bottom: 1px dashed #333; }
+    .summary-list li::before { content: '>'; color: var(--accent-gold); margin-right: 10px; }
+
+    .cta-button {
+      display: block; width: 100%; padding: 1rem; text-align: center; font-weight: 900;
+      text-transform: uppercase; text-decoration: none; letter-spacing: 0.1em; margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+    .cta-primary { background: var(--accent-gold); color: var(--bg-void); }
+    .cta-primary:hover { background: var(--text-primary); }
+    .cta-secondary { border: 1px solid var(--border-subtle); color: var(--text-primary); }
+    .cta-secondary:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+    .result-disclaimer { font-size: 0.75rem; color: #555; text-align: center; margin-top: 2rem; }
+
+    /* === Footer === */
+    .site-footer {
+      padding: 3vw 5vw; border-top: 1px solid var(--border-subtle); text-align: center;
+      font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase;
+    }
+
+    [hidden] { display: none !important; }
+  </style>
 </head>
 
 <body>
+  <div class="cursor" id="cursor"></div>
 
-  <!-- 배경 blob 장식 -->
-  <div class="blob"></div>
-
-  <!-- ============================================================
-       헤더
-  ============================================================ -->
   <header class="site-header">
-    <a href="../index.html" class="back-link">← 포트폴리오로 돌아가기</a>
-    <span class="site-logo">AI · ML</span>
+    <a href="../index.html" class="back-link">← RETURN TO PORTFOLIO</a>
+    <span class="site-logo">SYSTEM // ESTIMATOR</span>
   </header>
 
-  <!-- ============================================================
-       히어로
-  ============================================================ -->
   <section class="hero-section">
-    <p class="hero-eyebrow">AI Solution Estimator</p>
+    <p class="hero-eyebrow">[ SYSTEM ESTIMATE MODULE ]</p>
     <h1 class="hero-title">
-      <span class="line"><span>원하는 기술 스택을 선택하면</span></span>
-      <span class="line"><span class="accent">예상 비용과 기간을 즉시 확인하세요</span></span>
+      <span class="line">BUILD YOUR</span><br>
+      <span class="line accent">AI ARCHITECTURE</span>
     </h1>
     <p class="hero-subtitle">
-      선택 즉시 우측 패널에 결과가 자동 업데이트됩니다.<br />
-      모든 항목은 실제 수행한 프로젝트 기반으로 산정됩니다.
+      Select your tech stack to instantly calculate estimated costs and timeline. Based on real-world embedded AI projects.
     </p>
   </section>
 
-  <!-- ============================================================
-       메인 레이아웃 — 입력(좌) + 결과(우)
-  ============================================================ -->
   <main>
     <form id="estimatorForm" novalidate>
       <div class="estimator-layout">
 
-        <!-- ────────────────────────────────────────
-             입력 패널
-        ──────────────────────────────────────── -->
         <div class="input-panel">
 
-          <!-- Step 1: AI 기술 선택 -->
-          <div class="glass-card form-section">
-            <span class="step-badge">Step 1 — 복수 선택 가능</span>
-            <h2>구현할 AI 기능을 선택하세요</h2>
-            <p class="section-desc">
-              실제 개발 가능한 기능만 포함되어 있습니다.
-            </p>
+          <div class="form-section">
+            <span class="step-badge">[ STEP 01 ] SELECT MODULES</span>
+            <h2>Core AI Functions</h2>
+            <p class="section-desc">Multiple selections allowed. Real-world deployable functions only.</p>
 
             <div class="option-grid">
+              <div class="option-wrapper">
+                <input type="checkbox" id="cv_detection" name="techs" value="cv_detection" class="hidden-input" />
+                <label for="cv_detection" class="option-card">
+                  <div class="option-header">
+                    <span class="option-icon">👁️</span><span class="option-label">CV Detection</span>
+                  </div>
+                  <span class="option-sub">Real-time object detection via camera feed</span>
+                  <span class="option-meta">+3 WEEKS / +2.5M KRW</span>
+                </label>
+              </div>
 
-              <!-- CV — 객체 감지 -->
-              <label class="option-card">
-                <input type="checkbox" name="techs" value="cv_detection" />
-                <div class="option-card-inner">
-                  <span class="option-icon">👁️</span>
-                  <span class="option-label">CV — 객체 감지</span>
-                  <span class="option-sub">카메라 영상에서 특정 대상 실시간 감지</span>
-                  <span class="option-meta">+3주 / +250만</span>
-                </div>
-                <span class="option-check-mark" aria-hidden="true">✓</span>
-              </label>
+              <div class="option-wrapper">
+                <input type="checkbox" id="cv_classification" name="techs" value="cv_classification" class="hidden-input" />
+                <label for="cv_classification" class="option-card">
+                  <div class="option-header">
+                    <span class="option-icon">🧠</span><span class="option-label">CV Classification</span>
+                  </div>
+                  <span class="option-sub">MobileNetV2 · TFLite lightweight models</span>
+                  <span class="option-meta">+2 WEEKS / +1.8M KRW</span>
+                </label>
+              </div>
 
-              <!-- CV — 분류/인식 -->
-              <label class="option-card">
-                <input type="checkbox" name="techs" value="cv_classification" />
-                <div class="option-card-inner">
-                  <span class="option-icon">🧠</span>
-                  <span class="option-label">CV — 분류/인식</span>
-                  <span class="option-sub">MobileNetV2 · TFLite 경량 분류 모델</span>
-                  <span class="option-meta">+2주 / +180만</span>
-                </div>
-                <span class="option-check-mark" aria-hidden="true">✓</span>
-              </label>
+              <div class="option-wrapper">
+                <input type="checkbox" id="sensor_integration" name="techs" value="sensor_integration" class="hidden-input" />
+                <label for="sensor_integration" class="option-card">
+                  <div class="option-header">
+                    <span class="option-icon">🌡️</span><span class="option-label">Sensor Fusion</span>
+                  </div>
+                  <span class="option-sub">IoT sensor integration with AI logic</span>
+                  <span class="option-meta">+2 WEEKS / +1.2M KRW</span>
+                </label>
+              </div>
 
-              <!-- 센서 데이터 통합 -->
-              <label class="option-card">
-                <input type="checkbox" name="techs" value="sensor_integration" />
-                <div class="option-card-inner">
-                  <span class="option-icon">🌡️</span>
-                  <span class="option-label">센서 데이터 통합</span>
-                  <span class="option-sub">온습도·거리 등 IoT 센서와 AI 연동</span>
-                  <span class="option-meta">+2주 / +120만</span>
-                </div>
-                <span class="option-check-mark" aria-hidden="true">✓</span>
-              </label>
-
-              <!-- 엣지 AI 최적화 -->
-              <label class="option-card">
-                <input type="checkbox" name="techs" value="edge_inference" />
-                <div class="option-card-inner">
-                  <span class="option-icon">⚡</span>
-                  <span class="option-label">엣지 AI 최적화</span>
-                  <span class="option-sub">라즈베리파이 추론 지연 최소화</span>
-                  <span class="option-meta">+3주 / +200만</span>
-                </div>
-                <span class="option-check-mark" aria-hidden="true">✓</span>
-              </label>
-
-            </div>
-          </div>
-
-          <!-- ============================================================
-               Step 2: 하드웨어 플랫폼 (Raspberry Pi 고정)
-               — NVIDIA Jetson / x86 Linux 서버 / 클라우드 제거
-               — 실제 보유·경험한 하드웨어만 명시
-          ============================================================ -->
-          <div class="glass-card form-section">
-            <span class="step-badge">Step 2 — 플랫폼 고정</span>
-            <h2>하드웨어 플랫폼</h2>
-            <p class="section-desc">
-              검증된 플랫폼에서 안정적으로 구현합니다.
-            </p>
-
-            <!-- 선택 UI 없이 고정 배지로 표시 -->
-            <div class="platform-fixed">
-              <div class="platform-fixed-card">
-                <span class="option-icon">🍓</span>
-                <div class="platform-fixed-info">
-                  <span class="option-label">Raspberry Pi</span>
-                  <span class="option-sub">
-                    Baby Sleep Monitor AI 프로젝트에서 직접 구현·검증한 플랫폼입니다.
-                    TFLite 추론, MediaPipe, DHT22 센서 연동, MQTT 제어 루프를
-                    Raspberry Pi 4B 위에서 실제로 동작시킨 경험을 바탕으로 견적을 산정합니다.
-                  </span>
-                </div>
-                <span class="platform-fixed-badge">검증 완료</span>
+              <div class="option-wrapper">
+                <input type="checkbox" id="edge_inference" name="techs" value="edge_inference" class="hidden-input" />
+                <label for="edge_inference" class="option-card">
+                  <div class="option-header">
+                    <span class="option-icon">⚡</span><span class="option-label">Edge Optimize</span>
+                  </div>
+                  <span class="option-sub">Minimize inference latency on Raspberry Pi</span>
+                  <span class="option-meta">+3 WEEKS / +2.0M KRW</span>
+                </label>
               </div>
             </div>
-
           </div>
 
-          <!-- Step 3: 복잡도 선택 -->
-          <div class="glass-card form-section">
-            <span class="step-badge">Step 3 — 단일 선택 <span class="required-hint">*필수</span></span>
-            <h2>프로젝트 복잡도</h2>
-            <p class="section-desc">
-              프로젝트의 목표 수준을 선택하세요. 기본값은 Standard입니다.
-            </p>
+          <div class="form-section">
+            <span class="step-badge">[ STEP 02 ] PLATFORM</span>
+            <h2>Hardware Platform</h2>
+            <p class="section-desc">Locked to proven and verified embedded systems.</p>
+
+            <div class="platform-fixed-card">
+              <div class="option-header">
+                <span class="option-icon">🍓</span><span class="option-label">Raspberry Pi 4B</span>
+              </div>
+              <span class="option-sub">
+                Based on actual deployment experience from the Baby Sleep Monitor AI project. Includes TFLite inference, MediaPipe, DHT22 sensor integration, and MQTT control loops.
+              </span>
+              <span class="platform-fixed-badge">SYSTEM VERIFIED</span>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <span class="step-badge">[ STEP 03 ] COMPLEXITY</span>
+            <h2>Project Scope</h2>
+            <p class="section-desc">Select the target scale. Default is Standard.</p>
 
             <div class="complexity-group">
+              <div class="option-wrapper">
+                <input type="radio" id="comp_simple" name="complexity" value="simple" class="hidden-input" />
+                <label for="comp_simple" class="option-card">
+                  <div class="complexity-level">[ • - - ]</div>
+                  <span class="option-label">Simple</span>
+                  <span class="option-sub" style="margin-bottom:0;">Single function · Small dataset · Fast PoC (x1.0)</span>
+                </label>
+              </div>
 
-              <!-- Simple -->
-              <label class="complexity-card">
-                <input type="radio" name="complexity" value="simple" />
-                <div class="complexity-inner">
-                  <div class="complexity-level">
-                    <span class="dot dot--1"></span>
-                    <span class="dot dot--off"></span>
-                    <span class="dot dot--off"></span>
-                  </div>
-                  <strong>Simple</strong>
-                  <span>단일 기능 · 소규모 데이터셋 · 빠른 검증</span>
-                  <em>×1.0</em>
-                </div>
-              </label>
+              <div class="option-wrapper">
+                <input type="radio" id="comp_standard" name="complexity" value="standard" class="hidden-input" checked />
+                <label for="comp_standard" class="option-card">
+                  <div class="complexity-level">[ • • - ]</div>
+                  <span class="option-label">Standard</span>
+                  <span class="option-sub" style="margin-bottom:0;">Multi-function · Real-time processing (x1.5)</span>
+                </label>
+              </div>
 
-              <!-- Standard (기본 선택) -->
-              <label class="complexity-card">
-                <input type="radio" name="complexity" value="standard" checked />
-                <div class="complexity-inner">
-                  <div class="complexity-level">
-                    <span class="dot dot--1"></span>
-                    <span class="dot dot--2"></span>
-                    <span class="dot dot--off"></span>
-                  </div>
-                  <strong>Standard</strong>
-                  <span>복수 기능 통합 · 실시간 처리 · 안정화 포함</span>
-                  <em>×1.5</em>
-                </div>
-              </label>
-
-              <!-- Complex -->
-              <label class="complexity-card">
-                <input type="radio" name="complexity" value="complex" />
-                <div class="complexity-inner">
-                  <div class="complexity-level">
-                    <span class="dot dot--1"></span>
-                    <span class="dot dot--2"></span>
-                    <span class="dot dot--3"></span>
-                  </div>
-                  <strong>Complex</strong>
-                  <span>멀티 모달 · 커스텀 학습 · 하드웨어 최적화</span>
-                  <em>×2.2</em>
-                </div>
-              </label>
-
+              <div class="option-wrapper">
+                <input type="radio" id="comp_complex" name="complexity" value="complex" class="hidden-input" />
+                <label for="comp_complex" class="option-card">
+                  <div class="complexity-level">[ • • • ]</div>
+                  <span class="option-label">Complex</span>
+                  <span class="option-sub" style="margin-bottom:0;">Multi-modal · Custom training · Hardware tuning (x2.2)</span>
+                </label>
+              </div>
             </div>
           </div>
 
-        </div><!-- /input-panel -->
+        </div>
 
-        <!-- ────────────────────────────────────────
-             결과 패널 (sticky)
-        ──────────────────────────────────────── -->
         <div class="result-sticky">
-
-          <!-- 플레이스홀더 (기술 미선택 시 표시) -->
-          <div class="glass-card result-placeholder" id="resultPlaceholder" hidden>
-            <span class="placeholder-icon">🤖</span>
-            <p>
-              좌측에서 원하는 AI 기능을 선택하면<br />
-              예상 기간과 비용이 여기에 표시됩니다.
-            </p>
+          
+          <div class="result-placeholder" id="resultPlaceholder">
+            <span class="placeholder-icon">⚙️</span>
+            <p>Awaiting input parameters...<br>Select modules to initialize calculation.</p>
           </div>
 
-          <!-- 결과 카드 (선택 시 표시) -->
-          <div class="glass-card result-card" id="resultCard" hidden>
-
+          <div class="result-card" id="resultCard" hidden>
             <div class="result-header">
-              <span class="result-badge">예상 견적</span>
+              <span class="result-badge">SYS.ESTIMATE_RESULT</span>
             </div>
 
-            <!-- 개발 기간 -->
             <div class="result-metric">
-              <span class="result-metric-label">예상 개발 기간</span>
+              <span class="result-metric-label">Estimated Timeline</span>
               <div class="result-metric-value">
-                <span class="result-value-main" id="durationDisplay">—</span>
-                <span class="result-value-unit">주</span>
+                <span id="durationDisplay">—</span><span class="result-value-unit">WKS</span>
               </div>
               <span class="result-range" id="durationRange"></span>
             </div>
 
-            <div class="result-divider"></div>
-
-            <!-- 개발 비용 -->
             <div class="result-metric">
-              <span class="result-metric-label">예상 개발 비용</span>
+              <span class="result-metric-label">Estimated Cost</span>
               <div class="result-metric-value">
-                <span class="result-value-main" id="costDisplay">—</span>
-                <span class="result-value-unit">원</span>
+                <span id="costDisplay">—</span><span class="result-value-unit">KRW</span>
               </div>
               <span class="result-range" id="costRange"></span>
             </div>
 
-            <div class="result-divider"></div>
-
-            <!-- 선택 항목 요약 -->
-            <p class="summary-title">선택된 항목</p>
+            <p class="summary-title">Selected Modules</p>
             <ul class="summary-list" id="summaryList"></ul>
 
+            <a href="mailto:dongukkim0827@gmail.com?subject=AI%20솔루션%20견적%20문의" class="cta-button cta-primary">
+              INITIATE CONTACT
+            </a>
+            <a href="../index.html" class="cta-button cta-secondary">
+              RETURN TO PORTFOLIO
+            </a>
+
             <p class="result-disclaimer">
-              본 견적은 참고용 범위이며, 실제 요구사항 검토 후 최종 확정됩니다.
-              부가세 별도.
+              Estimates are for reference only. Final scope subject to technical review. VAT excluded.
             </p>
+          </div>
 
-            <!-- CTA -->
-            <a href="mailto:dongukkim0827@gmail.com?subject=견적%20문의" class="cta-button">
-              견적 문의하기 →
-            </a>
-            <a href="../index.html#contact" class="cta-button cta-button--secondary">
-              포트폴리오 보기
-            </a>
+        </div>
 
-          </div><!-- /result-card -->
-
-        </div><!-- /result-sticky -->
-
-      </div><!-- /estimator-layout -->
+      </div>
     </form>
   </main>
 
-  <!-- ============================================================
-       푸터
-  ============================================================ -->
   <footer class="site-footer">
-    <p>© 2026 — AI / ML Engineer Portfolio · 견적은 참고용이며 실제와 다를 수 있습니다.</p>
+    <p>© 2026 — ESTIMATOR MODULE INTEGRATED. ALL SYSTEMS NOMINAL.</p>
   </footer>
+
+  <script>
+    // 커스텀 커서 로직
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    
+    // 호버 효과
+    document.querySelectorAll('a, label').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(3)';
+        cursor.style.background = '#F3F3F3';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursor.style.background = 'var(--accent-gold)';
+      });
+    });
+  </script>
 
   <script src="estimator.js"></script>
 
