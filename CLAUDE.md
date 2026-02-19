@@ -15,8 +15,12 @@ Computer Vision 및 Embedded Systems 전문성을 중점으로, SIDS 예방 모�
 - Git 관리: `git status`, `git add .`, `git commit -m "message"`, `git push`
 
 ## File Structure
-- `index.html`: 메인 포트폴리오 페이지
+- `index1.html`: 메인 포트폴리오 페이지
+- `estimator/index.html`: AI 견적 계산기 메인 페이지
+- `estimator/estimator.css`: 견적 계산기 전용 스타일
+- `estimator/estimator.js`: 견적 계산기 비즈니스 로직 (PRICING_CONFIG, calculateEstimate 등)
 - `data.json`: 학습 상태 및 배지 메시지 데이터
+- `ROADMAP.md`: AI 견적 계산기 개발 계획서
 - `.gitignore`: Git 제외 파일 설정
 - `CLAUDE.md`: 프로젝트 가이드라인 (이 파일)
 

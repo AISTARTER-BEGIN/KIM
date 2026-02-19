@@ -680,9 +680,70 @@
             outline: 2px solid var(--accent-primary);
             outline-offset: 3px;
         }
+
+        /* 사이트 네비게이션 헤더 — 견적 계산기 진입점 */
+        .site-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-sm) var(--space-md);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .site-nav-logo {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .site-nav-estimator-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: var(--accent-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: transform var(--transition-base),
+                        box-shadow var(--transition-base),
+                        background var(--transition-base);
+            box-shadow: 0 3px 12px rgba(0, 102, 255, 0.25);
+        }
+
+        .site-nav-estimator-link:hover {
+            background: #0052CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.35);
+        }
+
+        @media (max-width: 768px) {
+            .site-nav-estimator-link {
+                font-size: 0.78rem;
+                padding: 7px 13px;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- 사이트 네비게이션 헤더 -->
+    <header class="site-nav">
+        <span class="site-nav-logo">DongUk KIM</span>
+        <a href="estimator/index.html" class="site-nav-estimator-link">
+            🧮 AI 견적 계산기
+        </a>
+    </header>
+
     <div class="blob"></div>
     
     <svg class="gear-background" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -892,11 +953,15 @@
                     📧 dongukkim0827@gmail.com<br>
                     <span class="copy-hint">(클릭하여 복사)</span>
                 </a>
-                <a href="https://github.com/AISTARTER-BEGIN" 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
+                <a href="https://github.com/AISTARTER-BEGIN"
+                   target="_blank"
+                   rel="noopener noreferrer"
                    class="contact-link">
                     💼 GitHub: AISTARTER-BEGIN
+                </a>
+                <a href="estimator/index.html" class="contact-link">
+                    🧮 AI 견적 계산기<br>
+                    <span class="copy-hint">개발 비용 바로 확인</span>
                 </a>
             </div>
         </section>
